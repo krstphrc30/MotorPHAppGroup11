@@ -1,48 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.group11.cp2.motorphapp;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
-/**
- *
- * @author Pil,Kristopher,Janice,Clarinda
- */
 public class MotorPHApp {
     public static void main(String[] args) {
-         // Create Employee
-        Employee emp = new Employee(10001, "Garcia", "Manuel III", 
-            LocalDate.of(1983, 10, 11), "Chief Executive Officer", 90000.0, 
-            1500.0, 2000.0, 1000.0, 45000.0, 537.71);
+        // Step 1: Read Employee CSV
+        List<Employee> employees = CSVHandler.readEmployeesFromCSV("src/main/resources/employeedata.csv");
 
-        // Create User
-        User user = new User("manuel_g", "pass123", "Employee", emp);
+        // Step 2: Read Attendance CSV
+        CSVHandler csvHandler = new CSVHandler();  // Instance needed for non-static method
+        List<AttendanceRecord> attendance = csvHandler.readAttendanceCSV("src/main/resources/attendancerecord.csv");
 
-        // Simulate login
-        boolean loginSuccess = user.login("manuel_g", "pass123");
-        System.out.println("Login success: " + loginSuccess); // Should print true
+        // Step 3: Display Employee Information
+        System.out.println("=== EMPLOYEE INFORMATION ===");
+        for (Employee emp : employees) {
+            displayEmployeeDetails(emp);
+            System.out.println("----------------------------");
+        }
 
-        // Simulate attendance
-        AttendanceRecord attendance = new AttendanceRecord(LocalDate.now(),
-                LocalTime.of(8, 0), LocalTime.of(17, 0));
-        double hoursWorked = attendance.computeWorkHours();
-        System.out.println("Hours worked: " + hoursWorked);
+        // Step 4: Weekly Summary Report
+        System.out.println("\n=== WEEKLY SALARY SUMMARY ===");
+        String summary = AttendanceRecord.generateWeeklySalarySummary(attendance, employees);
+        System.out.println(summary);
+    }
 
-        // Calculate deductions
-        Deductions deductions = new Deductions();
-        deductions.setDeductions(emp.getGrossSemiMonthlyRate());
+    // Utility method to organize employee display
+    private static void displayEmployeeDetails(Employee emp) {
+        System.out.println("Employee Number: " + emp.getEmployeeNumber());
+        System.out.println("Name: " + emp.getFirstName() + " " + emp.getLastName());
+        System.out.println("Birthday: " + emp.getBirthday());
+        System.out.println("Status: " + emp.getEmploymentStatus());
+        System.out.println("Position: " + emp.getPosition());
 
-        // Compute payroll
-        Payroll payroll = new Payroll(emp, hoursWorked, deductions); // Pass Employee object
-        payroll.computeGrossPay(); // No need to pass hourlyRate anymore
-        payroll.computeNetPay();
+        GovernmentDetails gov = emp.getGovernmentDetails();
+        if (gov != null) {
+            System.out.println("SSS Number: " + gov.getSssNumber());
+            System.out.println("PhilHealth Number: " + gov.getPhilHealthNumber());
+            System.out.println("TIN: " + gov.getTinNumber());
+            System.out.println("Pag-IBIG Number: " + gov.getPagIbigNumber());
+        }
 
-        System.out.println("Employee Name: " + payroll.getEmployeeName());
-        System.out.println("Gross Pay: " + payroll.getGrossPay());
-        System.out.println("Net Pay: " + payroll.getNetPay());
-        System.out.println("Total Deductions: " + deductions.getTotal());
+        CompensationDetails comp = emp.getCompensation();
+        if (comp != null) {
+            System.out.println("Basic Salary: " + comp.getBasicSalary());
+            System.out.println("Rice Subsidy: " + comp.getRiceSubsidy());
+            System.out.println("Phone Allowance: " + comp.getPhoneAllowance());
+            System.out.println("Clothing Allowance: " + comp.getClothingAllowance());
+            System.out.println("Gross Semi-Monthly Rate: " + comp.getGrossSemiMonthlyRate());
+            System.out.println("Hourly Rate: " + comp.getHourlyRate());
+        }
     }
 }

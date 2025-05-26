@@ -1,18 +1,16 @@
-/*
+/**
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.group11.cp2.motorphapp;
 
-/**
- *
- * @author Pil,Kristopher,Janice,Clarinda
- */
+import java.util.*;
+
 public class User {
     private String username;
     private String password;
     private String role;
-    private Employee employee; // you must also create this class
+    private Employee employee;
 
     public User(String username, String password, String role, Employee employee) {
         this.username = username;
@@ -21,26 +19,33 @@ public class User {
         this.employee = employee;
     }
 
-    public boolean login(String username, String password) {
-        return this.username.equals(username) && this.password.equals(password);
+    // Getters and Setters
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getRole() { return role; }
+    public Employee getEmployee() { return employee; }
+
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setRole(String role) { this.role = role; }
+    public void setEmployee(Employee employee) { this.employee = employee; }
+
+    // Logic
+    public boolean authenticate(String inputPassword) {
+        return this.password.equals(inputPassword);
     }
 
-    public String getRole() {
-        return role;
+    public boolean isAdmin() {
+        return "Admin".equalsIgnoreCase(role);
     }
 
-    public boolean changePassword(String oldPass, String newPass) {
-        if (this.password.equals(oldPass)) {
-            this.password = newPass;
-            return true;
+    // 🔐 Static login method
+    public static User login(List<User> users, String inputUsername, String inputPassword) {
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(inputUsername) && user.authenticate(inputPassword)) {
+                return user;
+            }
         }
-        return false;
+        return null; // Login failed
     }
-
-    public void forgotPassword(String email) {
-        // Placeholder: In a real system, you'd send a reset link to the email
-        System.out.println("Password reset link sent to: " + email);
-    }
-
-    // Getters and setters for username, password, role if needed
 }
