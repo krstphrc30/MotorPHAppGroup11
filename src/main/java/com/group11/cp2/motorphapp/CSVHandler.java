@@ -72,9 +72,9 @@ public class CSVHandler {
                                 employeeNumber,
                                 lastName,
                                 firstName,
+                                birthday,
                                 position,
                                 employmentStatus,
-                                birthday,
                                 compensation,
                                 govDetails
                         );

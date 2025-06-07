@@ -23,7 +23,7 @@ public class Deductions {
     public double getWithholdingTax() { return withholdingTax; }
 
     public double getTotalDeductions() {
-        return sss + philHealth + pagIbig + withholdingTax;
+        return sss + philHealth + pagIbig;
     }
 
     private static double calculateSSSContribution(double grossWeeklySalary) {
