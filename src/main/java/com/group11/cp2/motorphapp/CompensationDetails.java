@@ -19,7 +19,7 @@ public class CompensationDetails {
         this.hourlyRate = hourlyRate;
     }
 
-    // Getters and setters
+    // Getters
     public double getBasicSalary() {
         return basicSalary;
     }
@@ -44,5 +44,28 @@ public class CompensationDetails {
         return hourlyRate;
     }
 
-    // You can add setters if needed
+    // Setters
+    public void setBasicSalary(double basicSalary) {
+        this.basicSalary = basicSalary;
+    }
+
+    public void setRiceSubsidy(double riceSubsidy) {
+        this.riceSubsidy = riceSubsidy;
+    }
+
+    public void setPhoneAllowance(double phoneAllowance) {
+        this.phoneAllowance = phoneAllowance;
+    }
+
+    public void setClothingAllowance(double clothingAllowance) {
+        this.clothingAllowance = clothingAllowance;
+    }
+
+    public void setGrossSemiMonthlyRate(double grossSemiMonthlyRate) {
+        this.grossSemiMonthlyRate = grossSemiMonthlyRate;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
 }

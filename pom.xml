@@ -5,6 +5,18 @@
     <groupId>com.group11.cp2</groupId>
     <artifactId>MotorPHApp</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE240</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

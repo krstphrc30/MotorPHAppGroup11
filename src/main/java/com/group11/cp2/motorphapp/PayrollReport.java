@@ -1,58 +1,72 @@
+
 package com.group11.cp2.motorphapp;
 
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PayrollReport {
-    private static final int WEEKS_IN_MONTH = 4;
-
     private Employee employee;
-    private LocalDate payPeriodStart;
-    private LocalDate payPeriodEnd;
-    private double weeklyHoursWorked;
+    private YearMonth yearMonth;
+    private double monthlyRegularHours;
+    private double monthlyOvertimeHours;
     private double baseSalary;
     private double overtimePay;
     private double grossSalary;
     private Deductions deductions;
     private double totalAllowances;
 
-    public PayrollReport(Employee employee, LocalDate start, LocalDate end, Duration weeklyWorkDuration) {
+    public PayrollReport(Employee employee, YearMonth yearMonth, List<AttendanceRecord> attendanceRecords) {
         this.employee = employee;
-        this.payPeriodStart = start;
-        this.payPeriodEnd = end;
+        this.yearMonth = yearMonth;
 
-        this.weeklyHoursWorked = weeklyWorkDuration.toMinutes() / 60.0;
-        double hourlyRate = employee.getCompensation().getHourlyRate();
+        // Filter attendance records for the specified month and employee
+        List<AttendanceRecord> monthlyRecords = attendanceRecords.stream()
+                .filter(record -> record.getEmployeeNumber() == employee.getEmployeeNumber()
+                        && YearMonth.from(record.getDate()).equals(yearMonth))
+                .collect(Collectors.toList());
+
+        // Compute monthly hours
+        this.monthlyRegularHours = monthlyRecords.stream()
+                .map(AttendanceRecord::getRegularDuration)
+                .reduce(Duration.ZERO, Duration::plus)
+                .toMinutes() / 60.0;
+
+        this.monthlyOvertimeHours = monthlyRecords.stream()
+                .map(AttendanceRecord::getOvertimeDuration)
+                .reduce(Duration.ZERO, Duration::plus)
+                .toMinutes() / 60.0;
+
+        double hourlyRate = employee.getCompensationDetails().getHourlyRate();
 
         // Validate inputs
-        if (hourlyRate < 0 || weeklyHoursWorked < 0) {
-            throw new IllegalArgumentException("Hourly rate must be non-negative.");
+        if (hourlyRate < 0 || monthlyRegularHours < 0 || monthlyOvertimeHours < 0) {
+            throw new IllegalArgumentException("Hourly rate and hours must be non-negative.");
         }
 
-        // Calculate regular and overtime hours
-        double regularHours = Math.min(weeklyHoursWorked, 40); // Assume 40 hours/week max
-        double overtimeHours = Math.max(0, weeklyHoursWorked - 40);
-        this.baseSalary = hourlyRate * regularHours;
-        this.overtimePay = hourlyRate * 1.25 * overtimeHours; // 1.25x rate for overtime
+        // Calculate salary components
+        this.baseSalary = hourlyRate * monthlyRegularHours;
+        this.overtimePay = hourlyRate * 1.25 * monthlyOvertimeHours;
         this.grossSalary = baseSalary + overtimePay;
-        this.deductions = new Deductions(grossSalary);
-        this.totalAllowances = computeWeeklyAllowances(employee.getCompensation());
+        this.totalAllowances = computeMonthlyAllowances(employee.getCompensationDetails());
+        // Deductions based on gross salary and CSV basic salary
+        this.deductions = new Deductions(grossSalary, employee.getCompensationDetails().getBasicSalary());
     }
 
-    private double computeWeeklyAllowances(CompensationDetails comp) {
-        return (comp.getRiceSubsidy() + comp.getPhoneAllowance() + comp.getClothingAllowance()) / WEEKS_IN_MONTH;
+    private double computeMonthlyAllowances(CompensationDetails comp) {
+        return comp.getRiceSubsidy() + comp.getPhoneAllowance() + comp.getClothingAllowance();
     }
 
-    // Corrected method to compute net salary
     public double getNetSalary() {
-        return (grossSalary - deductions.getTotalDeductions() - deductions.getWithholdingTax()) + totalAllowances;
+        return grossSalary - deductions.getTotalDeductions() + totalAllowances;
     }
 
     // Getters
     public Employee getEmployee() { return employee; }
-    public LocalDate getPayPeriodStart() { return payPeriodStart; }
-    public LocalDate getPayPeriodEnd() { return payPeriodEnd; }
-    public double getWeeklyHoursWorked() { return weeklyHoursWorked; }
+    public YearMonth getYearMonth() { return yearMonth; }
+    public double getMonthlyRegularHours() { return monthlyRegularHours; }
+    public double getMonthlyOvertimeHours() { return monthlyOvertimeHours; }
     public double getBaseSalary() { return baseSalary; }
     public double getOvertimePay() { return overtimePay; }
     public double getGrossSalary() { return grossSalary; }
@@ -61,14 +75,12 @@ public class PayrollReport {
 
     public void printPayrollSummary() {
         System.out.println("-------------------------------------------------");
-        System.out.println("Weekly Salary Summary for " + employee.getLastName() + ", " + employee.getFirstName() + ":");
+        System.out.println("Monthly Salary Summary for " + employee.getLastName() + ", " + employee.getFirstName() + ":");
         System.out.println("-------------------------------------------------");
-        System.out.println("Week Period             : " + payPeriodStart + " - " + payPeriodEnd);
-        System.out.printf("Total Hours Worked      : %s%n", formatDuration(Duration.ofMinutes((long)(weeklyHoursWorked * 60))));
-        System.out.printf("Total Overtime          : %s%n", formatDuration(Duration.ofMinutes((long)(overtimeHours() * 60))));
-        System.out.printf("Base Salary             : PHP %.2f%n", baseSalary);
-        System.out.printf("Overtime Pay            : PHP %.2f%n", overtimePay);
-        System.out.printf("Gross Salary            : PHP %.2f%n", grossSalary);
+        System.out.println("Month                   : " + yearMonth);
+        System.out.printf("Total Regular Hours     : %s%n", formatDuration(Duration.ofMinutes((long)(monthlyRegularHours * 60))));
+        System.out.printf("Total Overtime Hours    : %s%n", formatDuration(Duration.ofMinutes((long)(monthlyOvertimeHours * 60))));
+        System.out.printf("Basic Salary            : PHP %.2f%n", employee.getCompensationDetails().getBasicSalary());
         System.out.printf("SSS Contribution        : PHP -%.2f%n", deductions.getSss());
         System.out.printf("PhilHealth Contribution : PHP -%.2f%n", deductions.getPhilHealth());
         System.out.printf("Pag-Ibig Contribution   : PHP -%.2f%n", deductions.getPagIbig());
@@ -77,10 +89,6 @@ public class PayrollReport {
         System.out.printf("Allowances              : PHP %.2f%n", totalAllowances);
         System.out.printf("Net Salary              : PHP %.2f%n", getNetSalary());
         System.out.println("-------------------------------------------------\n");
-    }
-
-    private double overtimeHours() {
-        return Math.max(0, weeklyHoursWorked - 40);
     }
 
     private String formatDuration(Duration duration) {
@@ -92,11 +100,11 @@ public class PayrollReport {
     @Override
     public String toString() {
         return String.format(
-            "Weekly Salary Summary for %s, %s%n" +
+            "Monthly Salary Summary for %s, %s%n" +
             "-------------------------------------------------%n" +
-            "Week Period             : %s - %s%n" +
-            "Total Hours Worked      : %s%n" +
-            "Total Overtime          : %s%n" +
+            "Month                   : %s%n" +
+            "Total Regular Hours     : %s%n" +
+            "Total Overtime Hours    : %s%n" +
             "Base Salary             : PHP %.2f%n" +
             "Overtime Pay            : PHP %.2f%n" +
             "Gross Salary            : PHP %.2f%n" +
@@ -108,12 +116,16 @@ public class PayrollReport {
             "Allowances              : PHP %.2f%n" +
             "Net Salary              : PHP %.2f%n",
             employee.getLastName(), employee.getFirstName(),
-            payPeriodStart, payPeriodEnd,
-            formatDuration(Duration.ofMinutes((long)(weeklyHoursWorked * 60))),
-            formatDuration(Duration.ofMinutes((long)(overtimeHours() * 60))),
+            yearMonth,
+            formatDuration(Duration.ofMinutes((long)(monthlyRegularHours * 60))),
+            formatDuration(Duration.ofMinutes((long)(monthlyOvertimeHours * 60))),
             baseSalary, overtimePay, grossSalary,
-            deductions.getSss(), deductions.getPhilHealth(), deductions.getPagIbig(),
-            deductions.getTotalDeductions(), deductions.getWithholdingTax(), totalAllowances,
+            deductions.getSss(),
+            deductions.getPhilHealth(),
+            deductions.getPagIbig(),
+            deductions.getTotalDeductions(),
+            deductions.getWithholdingTax(),
+            totalAllowances,
             getNetSalary()
         );
     }

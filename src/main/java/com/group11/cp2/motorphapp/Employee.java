@@ -1,39 +1,32 @@
 package com.group11.cp2.motorphapp;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class Employee {
     private int employeeNumber;
     private String lastName;
     private String firstName;
-    private String position;
-    private String employmentStatus;
     private LocalDate birthday;
-    private CompensationDetails compensation;
+    private String position;
+    private String status;
+    private CompensationDetails compensationDetails;
     private GovernmentDetails governmentDetails;
 
-    // GUI Components (static to share across Employee instances)
-    private static JTextField employeeNumberField, lastNameField, firstNameField, birthdayField, positionField, statusField ;
-    private static JTable employeeTable;
-    private static DefaultTableModel tableModel;
-    private static List<Employee> employees;
-
-    public Employee(int employeeNumber, String lastName, String firstName,
-                    LocalDate birthday, String position, String employmentStatus, 
-                    CompensationDetails compensation, GovernmentDetails governmentDetails) {
+    // Constructor
+    public Employee(int employeeNumber, String lastName, String firstName, LocalDate birthday,
+                    String position, String status, CompensationDetails compensationDetails,
+                    GovernmentDetails governmentDetails) {
         this.employeeNumber = employeeNumber;
         this.lastName = lastName;
         this.firstName = firstName;
         this.birthday = birthday;
         this.position = position;
-        this.employmentStatus = employmentStatus;
-        this.compensation = compensation;
+        this.status = status;
+        this.compensationDetails = compensationDetails;
         this.governmentDetails = governmentDetails;
     }
 
@@ -49,7 +42,7 @@ public class Employee {
     public String getFirstName() {
         return firstName;
     }
-    
+
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -58,21 +51,49 @@ public class Employee {
         return position;
     }
 
-    public String getEmploymentStatus() {
-        return employmentStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public CompensationDetails getCompensation() {
-        return compensation;
+    public CompensationDetails getCompensationDetails() {
+        return compensationDetails;
     }
 
     public GovernmentDetails getGovernmentDetails() {
         return governmentDetails;
     }
 
-    // Static method to create GUI panel
-    public static JPanel getGUIPanel(List<Employee> employeeList) {
-        employees = employeeList;
+    // Setters
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setCompensationDetails(CompensationDetails compensationDetails) {
+        this.compensationDetails = compensationDetails;
+    }
+
+    public void setGovernmentDetails(GovernmentDetails governmentDetails) {
+        this.governmentDetails = governmentDetails;
+    }
+
+    // GUI Panel for Employee Management
+    public static JPanel getGUIPanel(List<Employee> employees) {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -80,71 +101,33 @@ public class Employee {
         JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 5));
         formPanel.setBorder(BorderFactory.createTitledBorder("Employee Details"));
 
-        // Employee Fields
+        JTextField empNumberField = new JTextField();
+        JTextField lastNameField = new JTextField();
+        JTextField firstNameField = new JTextField();
+        JTextField birthdayField = new JTextField();
+        JTextField positionField = new JTextField();
+        JTextField statusField = new JTextField();
+
         formPanel.add(new JLabel("Employee Number:"));
-        employeeNumberField = new JTextField();
-        formPanel.add(employeeNumberField);
-
+        formPanel.add(empNumberField);
         formPanel.add(new JLabel("Last Name:"));
-        lastNameField = new JTextField();
         formPanel.add(lastNameField);
-
         formPanel.add(new JLabel("First Name:"));
-        firstNameField = new JTextField();
         formPanel.add(firstNameField);
-        
         formPanel.add(new JLabel("Birthday (YYYY-MM-DD):"));
-        birthdayField = new JTextField();
         formPanel.add(birthdayField);
-
         formPanel.add(new JLabel("Position:"));
-        positionField = new JTextField();
         formPanel.add(positionField);
-
-        formPanel.add(new JLabel("Employment Status:"));
-        statusField = new JTextField();
+        formPanel.add(new JLabel("Status:"));
         formPanel.add(statusField);
-
-        // Button Panel
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        JButton addButton = new JButton("Add Employee");
-        JButton clearButton = new JButton("Clear Form");
-        buttonPanel.add(addButton);
-        buttonPanel.add(clearButton);
 
         // Table Panel
         String[] columnNames = {"Emp No", "Last Name", "First Name", "Birthday", "Position", "Status"};
-        tableModel = new DefaultTableModel(columnNames, 0);
-        employeeTable = new JTable(tableModel);
-        JScrollPane tableScrollPane = new JScrollPane(employeeTable);
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        JTable table = new JTable(tableModel);
+        JScrollPane tableScrollPane = new JScrollPane(table);
 
         // Populate Table
-        populateTable();
-
-        // Add components to main panel
-        panel.add(formPanel, BorderLayout.WEST);
-        panel.add(tableScrollPane, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        // Button Actions
-        addButton.addActionListener(e -> addEmployee());
-        clearButton.addActionListener(e -> clearForm());
-
-        // Table Selection Listener
-        employeeTable.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = employeeTable.getSelectedRow();
-                if (selectedRow >= 0) {
-                    displayEmployee(selectedRow);
-                }
-            }
-        });
-
-        return panel;
-    }
-
-    private static void populateTable() {
-        tableModel.setRowCount(0); // Clear existing rows
         for (Employee emp : employees) {
             tableModel.addRow(new Object[]{
                     emp.getEmployeeNumber(),
@@ -152,76 +135,121 @@ public class Employee {
                     emp.getFirstName(),
                     emp.getBirthday(),
                     emp.getPosition(),
-                    emp.getEmploymentStatus()
+                    emp.getStatus()
             });
         }
-    }
 
-    private static void addEmployee() {
-        try {
-            // Validate and parse inputs
-            int employeeNumber = Integer.parseInt(employeeNumberField.getText().trim());
-            String lastName = lastNameField.getText().trim();
-            String firstName = firstNameField.getText().trim();
-            String position = positionField.getText().trim();
-            String status = statusField.getText().trim();
-            LocalDate birthday = LocalDate.parse(birthdayField.getText().trim(), DateTimeFormatter.ISO_LOCAL_DATE);
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JButton addButton = new JButton("Add");
+        JButton updateButton = new JButton("Update");
+        JButton clearButton = new JButton("Clear Form");
+        buttonPanel.add(addButton);
+        buttonPanel.add(updateButton);
+        buttonPanel.add(clearButton);
 
-            // Basic validation
-            if (lastName.isEmpty() || firstName.isEmpty() || position.isEmpty() || status.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+        // Table Selection Listener
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow >= 0) {
+                    empNumberField.setText(tableModel.getValueAt(selectedRow, 0).toString());
+                    lastNameField.setText(tableModel.getValueAt(selectedRow, 1).toString());
+                    firstNameField.setText(tableModel.getValueAt(selectedRow, 2).toString());
+                    birthdayField.setText(tableModel.getValueAt(selectedRow, 3).toString());
+                    positionField.setText(tableModel.getValueAt(selectedRow, 4).toString());
+                    statusField.setText(tableModel.getValueAt(selectedRow, 5).toString());
+                }
             }
+        });
 
-            // Check for duplicate employee number
-            if (employees.stream().anyMatch(emp -> emp.getEmployeeNumber() == employeeNumber)) {
-                JOptionPane.showMessageDialog(null, "Employee number already exists.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+        // Button Actions
+        addButton.addActionListener(e -> {
+            try {
+                int empNumber = Integer.parseInt(empNumberField.getText().trim());
+                if (employees.stream().anyMatch(emp -> emp.getEmployeeNumber() == empNumber)) {
+                    JOptionPane.showMessageDialog(null, "Employee number already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                Employee newEmp = new Employee(
+                        empNumber,
+                        lastNameField.getText().trim(),
+                        firstNameField.getText().trim(),
+                        LocalDate.parse(birthdayField.getText().trim()),
+                        positionField.getText().trim(),
+                        statusField.getText().trim(),
+                        new CompensationDetails(0, 0, 0, 0, 0, 0), // Default values
+                        new GovernmentDetails("", "", "", "") // Default values
+                );
+
+                employees.add(newEmp);
+                tableModel.addRow(new Object[]{
+                        newEmp.getEmployeeNumber(),
+                        newEmp.getLastName(),
+                        newEmp.getFirstName(),
+                        newEmp.getBirthday(),
+                        newEmp.getPosition(),
+                        newEmp.getStatus()
+                });
+
+                CSVHandler.writeEmployeesToCSV(employees, "src/main/resources/employeedata.csv");
+                JOptionPane.showMessageDialog(null, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                clearButton.doClick();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
 
-            // Create new employee with null compensation and government details
-            Employee newEmployee = new Employee(
-                    employeeNumber, lastName, firstName, birthday, position, status, null, null);
+        updateButton.addActionListener(e -> {
+            try {
+                int empNumber = Integer.parseInt(empNumberField.getText().trim());
+                Employee emp = employees.stream()
+                        .filter(employee -> employee.getEmployeeNumber() == empNumber)
+                        .findFirst()
+                        .orElse(null);
+                if (emp == null) {
+                    JOptionPane.showMessageDialog(null, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-            // Add to list and update table
-            employees.add(newEmployee);
-            tableModel.addRow(new Object[]{
-                    newEmployee.getEmployeeNumber(),
-                    newEmployee.getLastName(),
-                    newEmployee.getFirstName(),
-                    newEmployee.getBirthday(),
-                    newEmployee.getPosition(),
-                    newEmployee.getEmploymentStatus()
-            });
+                emp.setLastName(lastNameField.getText().trim());
+                emp.setFirstName(firstNameField.getText().trim());
+                emp.setBirthday(LocalDate.parse(birthdayField.getText().trim()));
+                emp.setPosition(positionField.getText().trim());
+                emp.setStatus(statusField.getText().trim());
 
-            JOptionPane.showMessageDialog(null, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            clearForm();
+                for (int i = 0; i < tableModel.getRowCount(); i++) {
+                    if (Integer.parseInt(tableModel.getValueAt(i, 0).toString()) == empNumber) {
+                        tableModel.setValueAt(emp.getLastName(), i, 1);
+                        tableModel.setValueAt(emp.getFirstName(), i, 2);
+                        tableModel.setValueAt(emp.getBirthday(), i, 3);
+                        tableModel.setValueAt(emp.getPosition(), i, 4);
+                        tableModel.setValueAt(emp.getStatus(), i, 5);
+                        break;
+                    }
+                }
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid number for Employee Number.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid date in YYYY-MM-DD format.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+                CSVHandler.writeEmployeesToCSV(employees, "src/main/resources/employeedata.csv");
+                JOptionPane.showMessageDialog(null, "Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
-    private static void clearForm() {
-        employeeNumberField.setText("");
-        lastNameField.setText("");
-        firstNameField.setText("");
-        positionField.setText("");
-        statusField.setText("");
-        birthdayField.setText("");
-    }
+        clearButton.addActionListener(e -> {
+            empNumberField.setText("");
+            lastNameField.setText("");
+            firstNameField.setText("");
+            birthdayField.setText("");
+            positionField.setText("");
+            statusField.setText("");
+        });
 
-    private static void displayEmployee(int rowIndex) {
-        Employee emp = employees.get(rowIndex);
-        employeeNumberField.setText(String.valueOf(emp.getEmployeeNumber()));
-        lastNameField.setText(emp.getLastName());
-        firstNameField.setText(emp.getFirstName());
-        positionField.setText(emp.getPosition());
-        statusField.setText(emp.getEmploymentStatus());
-        birthdayField.setText(emp.getBirthday().toString());
+        panel.add(formPanel, BorderLayout.WEST);
+        panel.add(tableScrollPane, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        return panel;
     }
 }

@@ -1,7 +1,10 @@
+
 package com.group11.cp2.motorphapp;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -99,7 +102,7 @@ public class CSVHandler {
         return employees;
     }
 
-    public List<AttendanceRecord> readAttendanceCSV(String filePath) {
+    public static List<AttendanceRecord> readAttendanceCSV(String filePath) {
         List<AttendanceRecord> records = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -140,6 +143,61 @@ public class CSVHandler {
         }
 
         return records;
+    }
+
+    public static void writeAttendanceToCSV(List<AttendanceRecord> records, String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("EmployeeNumber,Date,TimeIn,TimeOut");
+            writer.newLine();
+            for (AttendanceRecord record : records) {
+                writer.write(String.format("%d,%s,%s,%s",
+                    record.getEmployeeNumber(),
+                    record.getDate().format(attendanceDateFormatter),
+                    record.getTimeIn() != null ? record.getTimeIn().format(timeFormatter) : "",
+                    record.getTimeOut() != null ? record.getTimeOut().format(timeFormatter) : ""));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing attendance CSV: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeEmployeesToCSV(List<Employee> employees, String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            // Write header
+            writer.write("Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN Number,Pag-ibig Number,Status,Position,Immediate Supervisor,Basic Salary,Rice Subsidy,Phone Allowance,Clothing Allowance,Semi-monthly Rate,Hourly Rate");
+            writer.newLine();
+
+            for (Employee emp : employees) {
+                CompensationDetails comp = emp.getCompensationDetails();
+                GovernmentDetails gov = emp.getGovernmentDetails();
+                writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f",
+                        emp.getEmployeeNumber(),
+                        emp.getLastName(),
+                        emp.getFirstName(),
+                        emp.getBirthday().format(employeeDateFormatter),
+                        "", // Address (not in Employee class, set as empty)
+                        "", // Phone Number (not in Employee class, set as empty)
+                        gov.getSssNumber(),
+                        gov.getPhilHealthNumber(),
+                        gov.getTinNumber(),
+                        gov.getPagIbigNumber(),
+                        emp.getStatus(),
+                        emp.getPosition(),
+                        "", // Immediate Supervisor (not in Employee class, set as empty)
+                        comp.getBasicSalary(),
+                        comp.getRiceSubsidy(),
+                        comp.getPhoneAllowance(),
+                        comp.getClothingAllowance(),
+                        comp.getGrossSemiMonthlyRate(),
+                        comp.getHourlyRate()));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error writing employee CSV: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private static List<String> parseCSVLine(String line) {
