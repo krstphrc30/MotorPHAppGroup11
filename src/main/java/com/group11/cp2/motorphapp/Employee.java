@@ -16,7 +16,6 @@ public class Employee {
     private CompensationDetails compensationDetails;
     private GovernmentDetails governmentDetails;
 
-    // Constructor
     public Employee(int employeeNumber, String lastName, String firstName, LocalDate birthday,
                     String position, String status, CompensationDetails compensationDetails,
                     GovernmentDetails governmentDetails) {
@@ -30,74 +29,27 @@ public class Employee {
         this.governmentDetails = governmentDetails;
     }
 
-    // Getters
-    public int getEmployeeNumber() {
-        return employeeNumber;
-    }
+    public int getEmployeeNumber() { return employeeNumber; }
+    public String getLastName() { return lastName; }
+    public String getFirstName() { return firstName; }
+    public LocalDate getBirthday() { return birthday; }
+    public String getPosition() { return position; }
+    public String getStatus() { return status; }
+    public CompensationDetails getCompensationDetails() { return compensationDetails; }
+    public GovernmentDetails getGovernmentDetails() { return governmentDetails; }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setBirthday(LocalDate birthday) { this.birthday = birthday; }
+    public void setPosition(String position) { this.position = position; }
+    public void setStatus(String status) { this.status = status; }
+    public void setCompensationDetails(CompensationDetails compensationDetails) { this.compensationDetails = compensationDetails; }
+    public void setGovernmentDetails(GovernmentDetails governmentDetails) { this.governmentDetails = governmentDetails; }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public CompensationDetails getCompensationDetails() {
-        return compensationDetails;
-    }
-
-    public GovernmentDetails getGovernmentDetails() {
-        return governmentDetails;
-    }
-
-    // Setters
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setCompensationDetails(CompensationDetails compensationDetails) {
-        this.compensationDetails = compensationDetails;
-    }
-
-    public void setGovernmentDetails(GovernmentDetails governmentDetails) {
-        this.governmentDetails = governmentDetails;
-    }
-
-    // GUI Panel for Employee Management
     public static JPanel getGUIPanel(List<Employee> employees) {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Form Panel
         JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 5));
         formPanel.setBorder(BorderFactory.createTitledBorder("Employee Details"));
 
@@ -121,13 +73,11 @@ public class Employee {
         formPanel.add(new JLabel("Status:"));
         formPanel.add(statusField);
 
-        // Table Panel
         String[] columnNames = {"Emp No", "Last Name", "First Name", "Birthday", "Position", "Status"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(table);
 
-        // Populate Table
         for (Employee emp : employees) {
             tableModel.addRow(new Object[]{
                     emp.getEmployeeNumber(),
@@ -139,7 +89,6 @@ public class Employee {
             });
         }
 
-        // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton addButton = new JButton("Add");
         JButton updateButton = new JButton("Update");
@@ -148,7 +97,6 @@ public class Employee {
         buttonPanel.add(updateButton);
         buttonPanel.add(clearButton);
 
-        // Table Selection Listener
         table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = table.getSelectedRow();
@@ -163,7 +111,6 @@ public class Employee {
             }
         });
 
-        // Button Actions
         addButton.addActionListener(e -> {
             try {
                 int empNumber = Integer.parseInt(empNumberField.getText().trim());
@@ -179,8 +126,8 @@ public class Employee {
                         LocalDate.parse(birthdayField.getText().trim()),
                         positionField.getText().trim(),
                         statusField.getText().trim(),
-                        new CompensationDetails(0, 0, 0, 0, 0, 0), // Default values
-                        new GovernmentDetails("", "", "", "") // Default values
+                        new CompensationDetails(0, 0, 0, 0, 0, 0),
+                        new GovernmentDetails("", "", "", "")
                 );
 
                 employees.add(newEmp);

@@ -25,7 +25,6 @@ public class AttendanceRecord {
     private static final LocalTime WORK_END = LocalTime.of(17, 0);
     private static final Duration BREAK_TIME = Duration.ofHours(1);
 
-    // GUI Components (static to share across AttendanceRecord instances)
     private static JTextField employeeNumberField, dateField, timeInField, timeOutField;
     private static JTable attendanceTable;
     private static DefaultTableModel tableModel;
@@ -42,7 +41,14 @@ public class AttendanceRecord {
     }
 
     private void computeWorkDurations() {
-        if (timeIn == null || timeOut == null || timeOut.isBefore(timeIn)) {
+        if (timeIn == null || timeOut == null) {
+            System.err.println("Warning: Null timeIn or timeOut for employee #" + employeeNumber + " on " + date);
+            regularDuration = Duration.ZERO;
+            overtimeDuration = Duration.ZERO;
+            return;
+        }
+        if (timeOut.isBefore(timeIn)) {
+            System.err.println("Warning: Invalid time range for employee #" + employeeNumber + " on " + date + ": timeOut before timeIn");
             regularDuration = Duration.ZERO;
             overtimeDuration = Duration.ZERO;
             return;
@@ -136,7 +142,6 @@ public class AttendanceRecord {
 
     public static JPanel createAttendancePanel(List<Employee> employees, User loggedInUser) {
         AttendanceRecord.employees = employees;
-        // Fix: Explicit cast to resolve type mismatch between MotorPHApp.AttendanceRecord and this AttendanceRecord
         attendanceRecords = new ArrayList<>();
         for (Object record : MotorPHApp.getAttendance()) {
             if (record instanceof AttendanceRecord) {
@@ -148,7 +153,6 @@ public class AttendanceRecord {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Form Panel
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 5));
         formPanel.setBorder(BorderFactory.createTitledBorder("Attendance Record"));
 
@@ -168,7 +172,6 @@ public class AttendanceRecord {
         timeOutField = new JTextField();
         formPanel.add(timeOutField);
 
-        // Summary and Pay Panel
         JPanel summaryPayPanel = new JPanel(new BorderLayout(5, 5));
         summaryPayPanel.setBorder(BorderFactory.createTitledBorder("Summary & Pay"));
 
@@ -194,7 +197,6 @@ public class AttendanceRecord {
         summaryPayPanel.add(selectorPanel, BorderLayout.NORTH);
         summaryPayPanel.add(summaryScrollPane, BorderLayout.CENTER);
 
-        // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton addButton = new JButton("Add Attendance");
         JButton clearButton = new JButton("Clear Form");
@@ -203,7 +205,6 @@ public class AttendanceRecord {
         buttonPanel.add(clearButton);
         buttonPanel.add(viewDetailsButton);
 
-        // Table Panel
         String[] columnNames = {"Emp No", "Date", "Time In", "Time Out", "Regular", "Overtime", "Total"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -212,10 +213,8 @@ public class AttendanceRecord {
         attendanceTable = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(attendanceTable);
 
-        // Populate Table
         populateTable(loggedInUser, null);
 
-        // Main Panel Layout
         JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 0));
         centerPanel.add(tableScrollPane);
         centerPanel.add(summaryPayPanel);
@@ -224,7 +223,6 @@ public class AttendanceRecord {
         panel.add(centerPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Button Actions
         addButton.addActionListener(e -> addAttendance(loggedInUser));
         clearButton.addActionListener(e -> clearForm());
         viewDetailsButton.addActionListener(e -> viewAttendanceDetails());
@@ -433,7 +431,7 @@ public class AttendanceRecord {
                 Duration totalOT = monthRecords.stream().map(AttendanceRecord::getOvertimeDuration).reduce(Duration.ZERO, Duration::plus);
                 CompensationDetails comp = employee.getCompensationDetails();
                 double regularPay = totalRegular.toHours() * comp.getHourlyRate();
-                double otPay = totalOT.toHours() * (comp.getHourlyRate() * 1.5); // 1.5x OT rate (example)
+                double otPay = totalOT.toHours() * (comp.getHourlyRate() * 1.5);
                 double grossPay = regularPay + otPay + comp.getRiceSubsidy() + comp.getPhoneAllowance() + comp.getClothingAllowance();
                 sb.append("Monthly Pay Summary for ").append(fullName).append(":\n")
                         .append("-------------------------------------------------\n")
