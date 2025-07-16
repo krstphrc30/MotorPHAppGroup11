@@ -6,47 +6,42 @@ import java.util.List;
 public class User {
     private String username;
     private String password;
-    private String role;
+    private String email;
     private Employee employee;
-    private String securityQuestion;
-    private String securityAnswer;
+    private String role;
+    private String status;
     private static User loggedInUser;
 
-    public User(String username, String password, String role, Employee employee, String securityQuestion, String securityAnswer) {
+    public User(String username, String password, String email, Employee employee, String role, String status) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.email = email;
         this.employee = employee;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
+        this.role = role;
+        this.status = status;
     }
 
     public String getUsername() { return username; }
     public String getPassword() { return password; }
-    public String getRole() { return role; }
+    public String getEmail() { return email; }
     public Employee getEmployee() { return employee; }
-    public String getSecurityQuestion() { return securityQuestion; }
-    public String getSecurityAnswer() { return securityAnswer; }
+    public String getRole() { return role; }
+    public String getStatus() { return status; }
+    public boolean isAdmin() { return "Admin".equalsIgnoreCase(role); }
 
     public void setUsername(String username) { this.username = username; }
     public void setPassword(String password) { this.password = password; }
-    public void setRole(String role) { this.role = role; }
+    public void setEmail(String email) { this.email = email; }
     public void setEmployee(Employee employee) { this.employee = employee; }
-    public void setSecurityQuestion(String securityQuestion) { this.securityQuestion = securityQuestion; }
-    public void setSecurityAnswer(String securityAnswer) { this.securityAnswer = securityAnswer; }
+    public void setRole(String role) { this.role = role; }
+    public void setStatus(String status) { this.status = status; }
 
-    public boolean authenticate(String inputPassword) {
-        return this.password.equals(inputPassword);
-    }
+    public static User getLoggedInUser() { return loggedInUser; }
+    public static void setLoggedInUser(User user) { loggedInUser = user; }
 
-    public boolean isAdmin() {
-        return "Admin".equalsIgnoreCase(role);
-    }
-
-    public static User login(List<User> users, String inputUsername, String inputPassword) {
+    public static User login(List<User> users, String username, String password) {
         for (User user : users) {
-            if (user.getUsername().equalsIgnoreCase(inputUsername) && user.authenticate(inputPassword)) {
-                loggedInUser = user;
+            if (user.getUsername().equals(username) && user.getPassword().equals(password) && "Active".equals(user.getStatus())) {
                 return user;
             }
         }
@@ -67,8 +62,7 @@ public class User {
                 JOptionPane.showMessageDialog(loginFrame, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(loginFrame, 
-                    "Login successful! Welcome, " + loggedInUser.getUsername() + "! It is currently " + 
-                    java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("hh:mm a 'PST' 'on' EEEE, MMMM dd, yyyy")) + ".", 
+                    "Login Successful! Welcome, " + loggedInUser.getUsername() + "!", 
                     "Success", JOptionPane.INFORMATION_MESSAGE);
                 loginFrame.dispose();
                 MotorPHApp.createMainFrame();
@@ -76,13 +70,5 @@ public class User {
         });
 
         loginFrame.setVisible(true);
-    }
-
-    public static User getLoggedInUser() {
-        return loggedInUser;
-    }
-
-    public static void setLoggedInUser(User user) {
-        loggedInUser = user;
     }
 }

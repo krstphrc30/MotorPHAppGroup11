@@ -78,14 +78,14 @@ public class Dashboard extends javax.swing.JFrame {
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("Update");
         jPanel1.add(jButton8);
-        jButton8.setBounds(930, 950, 72, 30);
+        jButton8.setBounds(940, 950, 72, 30);
 
         jButton26.setBackground(new java.awt.Color(0, 102, 204));
         jButton26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton26.setForeground(new java.awt.Color(255, 255, 255));
         jButton26.setText("Delete");
         jPanel1.add(jButton26);
-        jButton26.setBounds(1020, 950, 72, 30);
+        jButton26.setBounds(1030, 950, 72, 30);
 
         jButton9.setBackground(new java.awt.Color(0, 102, 204));
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -155,6 +155,7 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane4.setBounds(527, 10, 1260, 920);
 
         jPanel12.setBackground(new java.awt.Color(233, 233, 233));
+        jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setPreferredSize(new java.awt.Dimension(500, 900));
 
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
@@ -237,7 +238,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(198, 198, 198)
                         .addComponent(jButton12)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +275,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jButton12)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel12);

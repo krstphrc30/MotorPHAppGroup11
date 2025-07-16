@@ -72,6 +72,8 @@ public class UpdateEmployeeRecord extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(14, 39, 94));
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Employee Number:");
 

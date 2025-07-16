@@ -1,3 +1,4 @@
+
 package com.group11.cp2.motorphapp;
 
 import javax.swing.*;
@@ -5,7 +6,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,8 +123,8 @@ public class MotorPHApp {
             // Enable buttons and set text field properties
             jButton6.setEnabled(true);
             jButton7.setEnabled(true);
-            jButton8.setEnabled(true);
-            jButton26.setEnabled(true);
+            jButton8.setEnabled(false); // Initially disabled
+            jButton26.setEnabled(false); // Initially disabled
             jButton12.setEnabled(true);
             jTextField8.setEditable(false);
 
@@ -160,6 +160,8 @@ public class MotorPHApp {
                         jTextField7.setText(String.valueOf(tableModel.getValueAt(selectedRow, 4)));
                         jTextField13.setText(String.valueOf(tableModel.getValueAt(selectedRow, 5)));
                         jTextField12.setText(String.valueOf(tableModel.getValueAt(selectedRow, 6)));
+                        jButton8.setEnabled(true); // Enable Update button
+                        jButton26.setEnabled(true); // Enable Delete button
                     } else {
                         jTextField8.setText("");
                         jTextField9.setText("");
@@ -168,6 +170,8 @@ public class MotorPHApp {
                         jTextField7.setText("");
                         jTextField13.setText("");
                         jTextField12.setText("");
+                        jButton8.setEnabled(false); // Disable Update button
+                        jButton26.setEnabled(false); // Disable Delete button
                     }
                 }
             });
@@ -193,10 +197,10 @@ public class MotorPHApp {
                             .findFirst()
                             .orElse(null);
                     if (emp != null) {
-                        // Debug: Log PayrollFrame parameters
                         System.out.println("Calling PayrollFrame for Employee: " + emp.getEmployeeNumber() + ", " + emp.getLastName());
                         System.out.println("Attendance records: " + (attendance != null ? attendance.size() : "null"));
                         PayrollFrame detailsFrame = new PayrollFrame(dashboard, emp, attendance);
+                        detailsFrame.setLocationRelativeTo(null); // Center the PayrollFrame
                         detailsFrame.setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(dashboard, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
