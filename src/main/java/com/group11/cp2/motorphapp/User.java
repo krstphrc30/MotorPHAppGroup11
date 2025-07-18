@@ -1,6 +1,10 @@
 package com.group11.cp2.motorphapp;
 
-import javax.swing.*;
+/**
+ *
+ * @author Carlo, Clarinda, Pil, Janice Group 11
+ */
+
 import java.util.List;
 
 public class User {
@@ -46,29 +50,5 @@ public class User {
             }
         }
         return null;
-    }
-
-    public static void createLoginFrame(List<User> users) {
-        UserLogin loginFrame = new UserLogin();
-        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        loginFrame.setSize(800, 500);
-        loginFrame.setLocationRelativeTo(null);
-
-        loginFrame.jButton1.addActionListener(e -> {
-            String username = loginFrame.jTextField1.getText().trim();
-            String password = new String(loginFrame.jPasswordField1.getPassword()).trim();
-            loggedInUser = login(users, username, password);
-            if (loggedInUser == null) {
-                JOptionPane.showMessageDialog(loginFrame, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(loginFrame, 
-                    "Login Successful! Welcome, " + loggedInUser.getUsername() + "!", 
-                    "Success", JOptionPane.INFORMATION_MESSAGE);
-                loginFrame.dispose();
-                MotorPHApp.createMainFrame();
-            }
-        });
-
-        loginFrame.setVisible(true);
     }
 }

@@ -1,22 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.group11.cp2.motorphapp;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.util.List;
+
 /**
- *
- * @author Carlo
+ * Dashboard form for MotorPH Payroll System to manage employee records.
  */
 public class Dashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Dashboard
-     */
-    public Dashboard() {
-        initComponents();
-    }
+    private List<User> users;
+    private List<Employee> employees;
+    private List<AttendanceRecord> attendance;
 
+    /**
+     * Creates new form Dashboard with required data.
+     */
+    public Dashboard(List<User> users, List<Employee> employees, List<AttendanceRecord> attendance) {
+        this.users = users;
+        this.employees = employees;
+        this.attendance = attendance;
+        initComponents();
+        initializeDashboard();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,6 +84,11 @@ public class Dashboard extends javax.swing.JFrame {
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("Update");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton8);
         jButton8.setBounds(940, 950, 72, 30);
 
@@ -90,18 +102,19 @@ public class Dashboard extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(0, 102, 204));
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("LOGOUT");
+        jButton9.setText("Back To Menu");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton9);
-        jButton9.setBounds(1680, 950, 79, 30);
+        jButton9.setBounds(1660, 950, 120, 30);
 
         jScrollPane4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jTable4.setBackground(new java.awt.Color(233, 233, 233));
+        jTable4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -150,52 +163,86 @@ public class Dashboard extends javax.swing.JFrame {
         jTable4.setShowGrid(true);
         jScrollPane4.setViewportView(jTable4);
         jTable4.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (jTable4.getColumnModel().getColumnCount() > 0) {
+            jTable4.getColumnModel().getColumn(0).setHeaderValue("Employee #");
+            jTable4.getColumnModel().getColumn(1).setHeaderValue("Last Name");
+            jTable4.getColumnModel().getColumn(2).setHeaderValue("First Name");
+            jTable4.getColumnModel().getColumn(3).setHeaderValue("SSS #");
+            jTable4.getColumnModel().getColumn(4).setHeaderValue("Philhealth #");
+            jTable4.getColumnModel().getColumn(5).setHeaderValue("TIN #");
+            jTable4.getColumnModel().getColumn(6).setHeaderValue("Pag Ibig #");
+        }
 
         jPanel1.add(jScrollPane4);
-        jScrollPane4.setBounds(527, 10, 1260, 920);
+        jScrollPane4.setBounds(530, 10, 1260, 920);
 
         jPanel12.setBackground(new java.awt.Color(233, 233, 233));
         jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setPreferredSize(new java.awt.Dimension(500, 900));
 
-        jLabel8.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(14, 49, 113));
         jLabel8.setText("Employee Details");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(14, 49, 113));
         jLabel9.setText("Employee Number:");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setText("Last Name:");
+        jLabel10.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel10.setText("Last Name:*");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setText("First Name:");
+        jLabel11.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel11.setText("First Name:*");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setText("SSS Number:");
+        jLabel12.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel12.setText("SSS Number:*");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel13.setText("Philhealth Number:");
+        jLabel13.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel13.setText("PhilhHealth Number:*");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setText("TIN Number:");
+        jLabel14.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel14.setText("TIN Number:*");
 
+        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField7.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
             }
         });
 
+        jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField8.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField8ActionPerformed(evt);
             }
         });
 
+        jTextField9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField9.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jTextField10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jTextField11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField11.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jTextField12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField12.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextField12.setDisabledTextColor(new java.awt.Color(255, 255, 255));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setText("PagIbig Number:");
+        jLabel15.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel15.setText("PagIbig Number:*");
 
+        jTextField13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextField13.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTextField13.setDisabledTextColor(new java.awt.Color(255, 255, 255));
 
         jButton12.setBackground(new java.awt.Color(0, 102, 204));
@@ -212,10 +259,6 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
@@ -233,11 +276,14 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)))
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(198, 198, 198)
-                        .addComponent(jButton12)))
+                        .addComponent(jButton12))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
@@ -275,11 +321,11 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jButton12)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel12);
-        jPanel12.setBounds(10, 10, 512, 916);
+        jPanel12.setBounds(10, 10, 512, 920);
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(1630, 30, 50, 790);
 
@@ -298,6 +344,319 @@ public class Dashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void initializeDashboard() {
+        System.setProperty("sun.java2d.uiScale", "1.0"); // Fix DPI scaling
+        User loggedInUser = User.getLoggedInUser();
+        if (loggedInUser == null) {
+            JOptionPane.showMessageDialog(null, "No user logged in.", "Error", JOptionPane.ERROR_MESSAGE);
+            new UserLogin(users).setVisible(true);
+            dispose();
+            return;
+        }
+        if (!loggedInUser.isAdmin()) {
+            JOptionPane.showMessageDialog(null, "Access restricted to Admin users.", "Access Denied", JOptionPane.ERROR_MESSAGE);
+            new UserLogin(users).setVisible(true);
+            dispose();
+            return;
+        }
+        System.out.println("Logged in: " + loggedInUser.getUsername());
+
+        setTitle("MotorPH Payroll System");
+        setLocationRelativeTo(null);
+
+        try {
+            // Adjust button sizes
+            jButton7.setBounds(680, 950, 150, 30); // View Employee
+            jButton6.setBounds(840, 950, 150, 30); // Add Employee
+            jButton8.setBounds(1000, 950, 100, 30); // Update
+            jButton26.setBounds(1110, 950, 100, 30); // Delete
+            jButton9.setBounds(1660, 950, 120, 30); // Back to Menu
+
+            // Configure jTable4
+            jTable4.setRowSelectionAllowed(true);
+            jTable4.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            jTable4.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            if (jTable4.getColumnModel().getColumnCount() >= 7) {
+                jTable4.getColumnModel().getColumn(0).setPreferredWidth(120);
+                jTable4.getColumnModel().getColumn(1).setPreferredWidth(200);
+                jTable4.getColumnModel().getColumn(2).setPreferredWidth(200);
+                jTable4.getColumnModel().getColumn(3).setPreferredWidth(120);
+                jTable4.getColumnModel().getColumn(4).setPreferredWidth(120);
+                jTable4.getColumnModel().getColumn(5).setPreferredWidth(120);
+                jTable4.getColumnModel().getColumn(6).setPreferredWidth(120);
+            }
+
+            // Populate jTable4 from in-memory employees list
+            DefaultTableModel tableModel = (DefaultTableModel) jTable4.getModel();
+            tableModel.setRowCount(0);
+            for (Employee emp : employees) {
+                GovernmentDetails gov = emp.getGovernmentDetails();
+                tableModel.addRow(new Object[]{
+                        emp.getEmployeeNumber(),
+                        emp.getLastName(),
+                        emp.getFirstName(),
+                        gov != null ? gov.getSssNumber() : "N/A",
+                        gov != null ? gov.getPhilHealthNumber() : "N/A",
+                        gov != null ? gov.getTinNumber() : "N/A",
+                        gov != null ? gov.getPagIbigNumber() : "N/A"
+                });
+            }
+
+            // Enable buttons and set text field properties
+            jButton6.setEnabled(true);
+            jButton7.setEnabled(true);
+            jButton8.setEnabled(false);
+            jButton26.setEnabled(false);
+            jButton12.setEnabled(false);
+            jTextField8.setEditable(false);
+
+            // Remove existing action listeners
+            for (ActionListener al : jButton6.getActionListeners()) {
+                jButton6.removeActionListener(al);
+            }
+            for (ActionListener al : jButton7.getActionListeners()) {
+                jButton7.removeActionListener(al);
+            }
+            for (ActionListener al : jButton8.getActionListeners()) {
+                jButton8.removeActionListener(al);
+            }
+            for (ActionListener al : jButton26.getActionListeners()) {
+                jButton26.removeActionListener(al);
+            }
+            for (ActionListener al : jButton9.getActionListeners()) {
+                jButton9.removeActionListener(al);
+            }
+            for (ActionListener al : jButton12.getActionListeners()) {
+                jButton12.removeActionListener(al);
+            }
+
+            // Row selection listener
+            jTable4.getSelectionModel().addListSelectionListener(e -> {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = jTable4.getSelectedRow();
+                    if (selectedRow >= 0) {
+                        jTextField8.setText(String.valueOf(tableModel.getValueAt(selectedRow, 0)));
+                        jTextField9.setText(String.valueOf(tableModel.getValueAt(selectedRow, 1)));
+                        jTextField10.setText(String.valueOf(tableModel.getValueAt(selectedRow, 2)));
+                        jTextField11.setText(String.valueOf(tableModel.getValueAt(selectedRow, 3)));
+                        jTextField7.setText(String.valueOf(tableModel.getValueAt(selectedRow, 4)));
+                        jTextField13.setText(String.valueOf(tableModel.getValueAt(selectedRow, 5)));
+                        jTextField12.setText(String.valueOf(tableModel.getValueAt(selectedRow, 6)));
+                        jButton8.setEnabled(true);
+                        jButton26.setEnabled(true);
+                        jButton12.setEnabled(true);
+                    } else {
+                        jTextField8.setText("");
+                        jTextField9.setText("");
+                        jTextField10.setText("");
+                        jTextField11.setText("");
+                        jTextField7.setText("");
+                        jTextField13.setText("");
+                        jTextField12.setText("");
+                        jButton8.setEnabled(false);
+                        jButton26.setEnabled(false);
+                        jButton12.setEnabled(false);
+                    }
+                }
+            });
+
+            // Add Employee
+            jButton6.addActionListener(e -> {
+                try {
+                    NewEmployeeRecord addFrame = new NewEmployeeRecord(employees, tableModel);
+                    addFrame.setLocationRelativeTo(this);
+                    addFrame.setVisible(true);
+                    addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                            // Refresh table after NewEmployeeRecord closes
+                            tableModel.setRowCount(0);
+                            for (Employee emp : employees) {
+                                GovernmentDetails gov = emp.getGovernmentDetails();
+                                tableModel.addRow(new Object[]{
+                                        emp.getEmployeeNumber(),
+                                        emp.getLastName(),
+                                        emp.getFirstName(),
+                                        gov != null ? gov.getSssNumber() : "N/A",
+                                        gov != null ? gov.getPhilHealthNumber() : "N/A",
+                                        gov != null ? gov.getTinNumber() : "N/A",
+                                        gov != null ? gov.getPagIbigNumber() : "N/A"
+                                });
+                            }
+                            jTable4.revalidate();
+                            jTable4.repaint();
+                        }
+                    });
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error opening add form: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            // View Employee
+            jButton7.addActionListener(e -> {
+                int selectedRow = jTable4.getSelectedRow();
+                if (selectedRow >= 0) {
+                    int empNumber = Integer.parseInt(tableModel.getValueAt(selectedRow, 0).toString());
+                    Employee emp = employees.stream()
+                            .filter(employee -> employee.getEmployeeNumber() == empNumber)
+                            .findFirst()
+                            .orElse(null);
+                    if (emp != null) {
+                        System.out.println("Calling PayrollFrame for Employee: " + emp.getEmployeeNumber() + ", " + emp.getLastName());
+                        System.out.println("Attendance records: " + (attendance != null ? attendance.size() : "null"));
+                        PayrollFrame detailsFrame = new PayrollFrame(this, emp, attendance);
+                        detailsFrame.setLocationRelativeTo(null);
+                        detailsFrame.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select an employee.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            // Update Employee
+            ActionListener updateEmployeeAction = e -> {
+                int selectedRow = jTable4.getSelectedRow();
+                if (selectedRow >= 0) {
+                    try {
+                        String empNumberText = jTextField8.getText().trim();
+                        String lastName = jTextField9.getText().trim();
+                        String firstName = jTextField10.getText().trim();
+                        String sssNumber = jTextField11.getText().trim();
+                        String philHealthNumber = jTextField7.getText().trim();
+                        String tinNumber = jTextField13.getText().trim();
+                        String pagIbigNumber = jTextField12.getText().trim();
+
+                        // Validate no empty fields
+                        if (empNumberText.isEmpty() || lastName.isEmpty() || firstName.isEmpty() ||
+                                sssNumber.isEmpty() || philHealthNumber.isEmpty() ||
+                                tinNumber.isEmpty() || pagIbigNumber.isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "All fields must be filled.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        int empNumber = Integer.parseInt(empNumberText);
+                        Employee emp = employees.stream()
+                                .filter(employee -> employee.getEmployeeNumber() == empNumber)
+                                .findFirst()
+                                .orElse(null);
+                        if (emp == null) {
+                            JOptionPane.showMessageDialog(this, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        // Validate ID number formats
+                        if (!sssNumber.matches("\\d{2}-\\d{7}-\\d{1}") ||
+                                !philHealthNumber.matches("\\d{9,12}") ||
+                                !tinNumber.matches("\\d{3}-\\d{3}-\\d{3}-\\d{3}") ||
+                                !pagIbigNumber.matches("\\d{9,12}")) {
+                            JOptionPane.showMessageDialog(this,
+                                    "Please enter valid ID numbers:\n" +
+                                    "SSS: XX-XXXXXXX-X (e.g., 44-4506057-3)\n" +
+                                    "TIN: XXX-XXX-XXX-XXX (e.g., 448-272-771-000)\n" +
+                                    "PhilHealth/Pag-IBIG: 9–12 digits",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        emp.setLastName(lastName);
+                        emp.setFirstName(firstName);
+                        GovernmentDetails gov = new GovernmentDetails(sssNumber, philHealthNumber, tinNumber, pagIbigNumber);
+                        emp.setGovernmentDetails(gov);
+
+                        User user = users.stream()
+                                .filter(u -> u.getEmployee() != null && u.getEmployee().getEmployeeNumber() == empNumber)
+                                .findFirst()
+                                .orElse(null);
+                        if (user != null) {
+                            user.setEmployee(emp);
+                            user.setUsername(firstName.toLowerCase() + empNumber);
+                        }
+
+                        tableModel.setValueAt(lastName, selectedRow, 1);
+                        tableModel.setValueAt(firstName, selectedRow, 2);
+                        tableModel.setValueAt(sssNumber, selectedRow, 3);
+                        tableModel.setValueAt(philHealthNumber, selectedRow, 4);
+                        tableModel.setValueAt(tinNumber, selectedRow, 5);
+                        tableModel.setValueAt(pagIbigNumber, selectedRow, 6);
+
+                        CSVHandler.writeEmployeesToCSV(employees, "src/main/resources/employeedata.csv");
+                        JOptionPane.showMessageDialog(this, "Employee updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(this, "Invalid employee number format.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select an employee.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            };
+
+            jButton8.addActionListener(updateEmployeeAction);
+            jButton12.addActionListener(updateEmployeeAction);
+
+            // Delete Employee
+            jButton26.addActionListener(e -> {
+                int selectedRow = jTable4.getSelectedRow();
+                if (selectedRow >= 0) {
+                    try {
+                        int empNumber = Integer.parseInt(tableModel.getValueAt(selectedRow, 0).toString());
+                        int confirm = JOptionPane.showConfirmDialog(this, "Delete employee #" + empNumber + "?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+                        if (confirm == JOptionPane.YES_OPTION) {
+                            Employee emp = employees.stream()
+                                    .filter(employee -> employee.getEmployeeNumber() == empNumber)
+                                    .findFirst()
+                                    .orElse(null);
+                            if (emp != null) {
+                                employees.remove(emp);
+                                users.removeIf(user -> user.getEmployee() != null && user.getEmployee().getEmployeeNumber() == empNumber);
+                                attendance.removeIf(record -> record.getEmployeeNumber() == empNumber);
+                                tableModel.removeRow(selectedRow);
+                                CSVHandler.writeEmployeesToCSV(employees, "src/main/resources/employeedata.csv");
+                                CSVHandler.writeAttendanceToCSV(attendance, "src/main/resources/attendancerecord.csv");
+                                jTextField8.setText("");
+                                jTextField9.setText("");
+                                jTextField10.setText("");
+                                jTextField11.setText("");
+                                jTextField7.setText("");
+                                jTextField13.setText("");
+                                jTextField12.setText("");
+                                JOptionPane.showMessageDialog(this, "Employee deleted!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Error deleting employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select an employee.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+            // Back to Menu
+            jButton9.addActionListener(e -> {
+                SelectionMenu selectionMenu = new SelectionMenu();
+                selectionMenu.setLocationRelativeTo(null);
+                selectionMenu.setVisible(true);
+                dispose();
+            });
+
+            // Refresh UI
+            jTable4.revalidate();
+            jTable4.repaint();
+            this.revalidate();
+            this.repaint();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error initializing Dashboard: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            new UserLogin(users).setVisible(true);
+            dispose();
+        }
+
+        setVisible(true);
+    }
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
@@ -315,15 +674,15 @@ public class Dashboard extends javax.swing.JFrame {
       // TODO add your handling code here:
     }//GEN-LAST:event_jButton12ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -331,25 +690,11 @@ public class Dashboard extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dashboard().setVisible(true);
-            }
-        });
+        // Note: This main method is for testing only; actual instantiation happens via MotorPHApp
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton jButton12;
     protected javax.swing.JButton jButton26;

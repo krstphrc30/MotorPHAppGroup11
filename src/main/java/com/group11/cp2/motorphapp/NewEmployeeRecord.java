@@ -62,7 +62,6 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
             System.err.println("Warning: employees list is null in initializeEmployeeNumber");
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,14 +73,6 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -90,43 +81,22 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton14 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(14, 39, 94));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Employee Number:");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Last Name:");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("First Name:");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("SSS Number:");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setText("Philhealth Number:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("TIN Number:");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("Pag Ibig Number:");
-
-        jButton12.setBackground(new java.awt.Color(0, 102, 204));
-        jButton12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Save");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
 
         jButton13.setBackground(new java.awt.Color(0, 102, 204));
         jButton13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -138,45 +108,132 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
+        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
 
+        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
 
+        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
             }
         });
 
+        jTextField5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
 
+        jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
             }
         });
 
+        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
+            }
+        });
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(14, 39, 94), 3));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel2.setText("Employee Number:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel3.setText("Last Name:*");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel4.setText("First Name:*");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel5.setText("SSS Number:*");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel6.setText("TIN Number:*");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel7.setText("PhilHealth Number:*");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel8.setText("Pag Ibig Number:*");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(44, 44, 44)
+                .addComponent(jLabel3)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(54, 54, 54)
+                .addComponent(jLabel7)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel6)
+                .addGap(49, 49, 49)
+                .addComponent(jLabel8)
+                .addGap(15, 15, 15))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(14, 49, 113));
+        jLabel1.setText("New Employee Record");
+
+        jButton14.setBackground(new java.awt.Color(0, 102, 204));
+        jButton14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton14.setForeground(new java.awt.Color(255, 255, 255));
+        jButton14.setText("Save");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
             }
         });
 
@@ -185,72 +242,59 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(216, 216, 216)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton14))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(247, 247, 247)
-                        .addComponent(jButton12))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(40, 40, 40)
                         .addComponent(jButton13)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(64, 64, 64))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton12)
-                    .addComponent(jButton13))
+                    .addComponent(jButton13)
+                    .addComponent(jButton14))
                 .addGap(18, 18, 18))
         );
 
@@ -286,108 +330,6 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        System.out.println("NewEmployeeRecord: Save button clicked at " + java.time.LocalDateTime.now());
-        try {
-            // Get input values
-            int empNumber = Integer.parseInt(jTextField2.getText().trim());
-            String lastName = jTextField3.getText().trim();
-            String firstName = jTextField7.getText().trim();
-            String sssNumber = jTextField6.getText().trim();
-            String philHealthNumber = jTextField4.getText().trim();
-            String tinNumber = jTextField5.getText().trim();
-            String pagIbigNumber = jTextField1.getText().trim();
-
-            // Debug: Log input values
-            System.out.println("Input - EmpNumber: " + empNumber + ", LastName: " + lastName +
-                    ", FirstName: " + firstName + ", SSS: " + sssNumber +
-                    ", PhilHealth: " + philHealthNumber + ", TIN: " + tinNumber +
-                    ", PagIbig: " + pagIbigNumber);
-
-            // Validate inputs
-            if (employees == null) {
-                JOptionPane.showMessageDialog(this, "Error: Employee list is not initialized.", "Error", JOptionPane.ERROR_MESSAGE);
-                System.err.println("Error: employees list is null");
-                return;
-            }
-            if (lastName.isEmpty() || firstName.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Name fields cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println("Validation failed: Empty name fields");
-                return;
-            }
-            if (!sssNumber.matches("\\d{9,12}") || !philHealthNumber.matches("\\d{9,12}") ||
-                    !tinNumber.matches("\\d{9,12}") || !pagIbigNumber.matches("\\d{9,12}")) {
-                JOptionPane.showMessageDialog(this, "Please enter valid ID numbers (9–12 digits).", "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println("Validation failed: Invalid ID numbers");
-                return;
-            }
-            if (employees.stream().anyMatch(e -> e.getEmployeeNumber() == empNumber)) {
-                JOptionPane.showMessageDialog(this, "Employee number already exists.", "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println("Validation failed: Duplicate employee number");
-                return;
-            }
-
-            // Create Employee
-            GovernmentDetails gov = new GovernmentDetails(sssNumber, philHealthNumber, tinNumber, pagIbigNumber);
-            CompensationDetails comp = new CompensationDetails(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-            Employee emp = new Employee(empNumber, lastName, firstName, LocalDate.now(), "", "", comp, gov);
-
-            // Add to employees
-            employees.add(emp);
-            System.out.println("Employee added to list: " + empNumber);
-
-            // Create and add User
-            User user = new User(
-                    firstName.toLowerCase() + empNumber,
-                    "password123",
-                    firstName.toLowerCase() + "@motorph.com",
-                    emp,
-                    "Employee",
-                    "Active"
-            );
-            MotorPHApp.getUsers().add(user);
-            System.out.println("User added: " + user.getUsername());
-
-            // Update CSV
-            try {
-                CSVHandler.writeEmployeesToCSV(employees, "src/main/resources/employeedata.csv");
-                System.out.println("CSV updated successfully");
-            } catch (Exception ex) {
-                System.err.println("Failed to write to CSV: " + ex.getMessage());
-                JOptionPane.showMessageDialog(this, "Error saving to CSV: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Update table
-            if (tableModel != null) {
-                tableModel.addRow(new Object[]{
-                        emp.getEmployeeNumber(),
-                        emp.getLastName(),
-                        emp.getFirstName(),
-                        gov.getSssNumber(),
-                        gov.getPhilHealthNumber(),
-                        gov.getTinNumber(),
-                        gov.getPagIbigNumber()
-                });
-                System.out.println("Table updated with employee: " + empNumber);
-            } else {
-                System.err.println("tableModel is null in Save");
-                JOptionPane.showMessageDialog(this, "Error: Table model is null.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-        } catch (NumberFormatException ex) {
-            System.err.println("Save error: Invalid employee number format - " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error: Invalid employee number format.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            System.err.println("Save error: " + ex.getMessage());
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
        System.out.println("NewEmployeeRecord: Cancel button clicked at " + java.time.LocalDateTime.now());
@@ -443,9 +385,132 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        System.out.println("NewEmployeeRecord: Save button clicked at " + java.time.LocalDateTime.now());
+        try {
+            // Get input values
+            int empNumber = Integer.parseInt(jTextField2.getText().trim());
+            String lastName = jTextField3.getText().trim();
+            String firstName = jTextField7.getText().trim();
+            String sssNumber = jTextField6.getText().trim();
+            String philHealthNumber = jTextField4.getText().trim();
+            String tinNumber = jTextField5.getText().trim();
+            String pagIbigNumber = jTextField1.getText().trim();
+
+            // Debug: Log input values
+            System.out.println("Input - EmpNumber: " + empNumber + ", LastName: " + lastName +
+                    ", FirstName: " + firstName + ", SSS: " + sssNumber +
+                    ", PhilHealth: " + philHealthNumber + ", TIN: " + tinNumber +
+                    ", PagIbig: " + pagIbigNumber);
+
+            // Validate inputs
+            if (employees == null) {
+                JOptionPane.showMessageDialog(this, "Error: Employee list is not initialized.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.err.println("Error: employees list is null");
+                return;
+            }
+            if (lastName.isEmpty() || firstName.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Name fields cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Validation failed: Empty name fields");
+                return;
+            }
+            if (!sssNumber.matches("\\d{2}-\\d{7}-\\d{1}") || 
+                !philHealthNumber.matches("\\d{9,12}") ||
+                !pagIbigNumber.matches("\\d{9,12}")) {
+                JOptionPane.showMessageDialog(this, 
+                    "Please enter valid ID numbers:\n" +
+                    "SSS: XX-XXXXXXX-X (e.g., 44-4506057-3)\n" +
+                    "TIN: XXX-XXX-XXX-XXX (e.g., 448-272-771-000)\n" +
+                    "PhilHealth/Pag-IBIG: 9–12 digits", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Validation failed: Invalid ID numbers");
+                return;
+            }
+            if (employees.stream().anyMatch(e -> e.getEmployeeNumber() == empNumber)) {
+                JOptionPane.showMessageDialog(this, "Employee number already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Validation failed: Duplicate employee number");
+                return;
+            }
+
+            // Create Employee
+            GovernmentDetails gov = new GovernmentDetails(sssNumber, philHealthNumber, tinNumber, pagIbigNumber);
+            CompensationDetails comp = new CompensationDetails(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            Employee emp = new Employee(empNumber, lastName, firstName, LocalDate.now(), "", "", comp, gov);
+
+            // Debug: Log GovernmentDetails values
+            System.out.println("GovernmentDetails created - SSS: " + gov.getSssNumber() +
+                    ", PhilHealth: " + gov.getPhilHealthNumber() +
+                    ", TIN: " + gov.getTinNumber() +
+                    ", PagIbig: " + gov.getPagIbigNumber());
+
+            // Add to employees
+            employees.add(emp);
+            System.out.println("Employee added to list: " + empNumber);
+
+            // Create and add User
+            User user = new User(
+                    firstName.toLowerCase() + empNumber,
+                    "password123",
+                    firstName.toLowerCase() + "@motorph.com",
+                    emp,
+                    "Employee",
+                    "Active"
+            );
+            MotorPHApp.getUsers().add(user);
+            System.out.println("User added: " + user.getUsername());
+
+            // Update CSV
+            try {
+                CSVHandler.writeEmployeesToCSV(employees, "src/main/resources/employeedata.csv");
+                System.out.println("CSV updated successfully");
+                // Debug: Re-read CSV to verify
+                List<Employee> verifyEmployees = CSVHandler.readEmployeesFromCSV("src/main/resources/employeedata.csv");
+                Employee lastEmployee = verifyEmployees.get(verifyEmployees.size() - 1);
+                System.out.println("CSV verification - Last employee: EmpNumber: " + lastEmployee.getEmployeeNumber() +
+                        ", SSS: " + lastEmployee.getGovernmentDetails().getSssNumber() +
+                        ", PhilHealth: " + lastEmployee.getGovernmentDetails().getPhilHealthNumber() +
+                        ", TIN: " + lastEmployee.getGovernmentDetails().getTinNumber() +
+                        ", PagIbig: " + lastEmployee.getGovernmentDetails().getPagIbigNumber());
+            } catch (Exception ex) {
+                System.err.println("Failed to write to CSV: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Error saving to CSV: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Update table
+            if (tableModel != null) {
+                tableModel.addRow(new Object[]{
+                        emp.getEmployeeNumber(),
+                        emp.getLastName(),
+                        emp.getFirstName(),
+                        gov.getSssNumber(),
+                        gov.getPhilHealthNumber(),
+                        gov.getTinNumber(),
+                        gov.getPagIbigNumber()
+                });
+                System.out.println("Table updated with employee: " + empNumber);
+            } else {
+                System.err.println("tableModel is null in Save");
+                JOptionPane.showMessageDialog(this, "Error: Table model is null.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            JOptionPane.showMessageDialog(this, "Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        } catch (NumberFormatException ex) {
+            System.err.println("Save error: Invalid employee number format - " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: Invalid employee number format.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            System.err.println("Save error: " + ex.getMessage());
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton14ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JButton jButton12;
     protected javax.swing.JButton jButton13;
+    protected javax.swing.JButton jButton14;
+    protected javax.swing.JLabel jLabel1;
     protected javax.swing.JLabel jLabel2;
     protected javax.swing.JLabel jLabel3;
     protected javax.swing.JLabel jLabel4;
@@ -455,6 +520,7 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
     protected javax.swing.JLabel jLabel8;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanel2;
+    protected javax.swing.JPanel jPanel3;
     protected javax.swing.JTextField jTextField1;
     protected javax.swing.JTextField jTextField2;
     protected javax.swing.JTextField jTextField3;

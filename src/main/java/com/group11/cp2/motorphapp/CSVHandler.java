@@ -1,11 +1,6 @@
-
 package com.group11.cp2.motorphapp;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +16,6 @@ public class CSVHandler {
 
     public static List<Employee> readEmployeesFromCSV(String filePath) {
         List<Employee> employees = new ArrayList<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isFirstLine = true;
@@ -57,8 +51,8 @@ public class CSVHandler {
 
                         GovernmentDetails govDetails = new GovernmentDetails(
                                 sssNumber,
-                                tinNumber,
                                 philHealthNumber,
+                                tinNumber,
                                 pagIbigNumber
                         );
 
@@ -84,15 +78,15 @@ public class CSVHandler {
 
                         employees.add(employee);
                     } catch (DateTimeParseException e) {
-                        System.err.println("Invalid date format: " + values.get(3));
+                        System.err.println("Invalid date format in line: " + line);
                     } catch (NumberFormatException e) {
-                        System.err.println("Invalid number in employee line: " + line);
+                        System.err.println("Invalid number format in employee line: " + line);
                     } catch (Exception e) {
                         System.err.println("Error parsing employee line: " + line);
                         e.printStackTrace();
                     }
                 } else {
-                    System.err.println("Invalid row (too few columns): " + line);
+                    System.err.println("Invalid employee row (too few columns): " + line);
                 }
             }
         } catch (IOException e) {
@@ -104,7 +98,6 @@ public class CSVHandler {
 
     public static List<AttendanceRecord> readAttendanceCSV(String filePath) {
         List<AttendanceRecord> records = new ArrayList<>();
-
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             boolean isFirstLine = true;
@@ -117,25 +110,36 @@ public class CSVHandler {
 
                 List<String> values = parseCSVLine(line);
 
-                if (values.size() >= 6) {
+                if (values.size() >= 4) { // Expect exactly 4 columns: EmployeeNumber,Date,TimeIn,TimeOut
                     try {
                         int employeeNumber = Integer.parseInt(values.get(0).trim());
-                        LocalDate date = LocalDate.parse(values.get(3).trim(), attendanceDateFormatter);
-                        LocalTime timeIn = LocalTime.parse(values.get(4).trim(), timeFormatter);
-                        LocalTime timeOut = LocalTime.parse(values.get(5).trim(), timeFormatter);
+                        LocalDate date = LocalDate.parse(values.get(1).trim(), attendanceDateFormatter);
+
+                        // Handle TimeIn and TimeOut, allowing for empty or null values
+                        LocalTime timeIn = null;
+                        String timeInStr = values.get(2).trim();
+                        if (!timeInStr.isEmpty()) {
+                            timeIn = LocalTime.parse(timeInStr, timeFormatter);
+                        }
+
+                        LocalTime timeOut = null;
+                        String timeOutStr = values.get(3).trim();
+                        if (!timeOutStr.isEmpty()) {
+                            timeOut = LocalTime.parse(timeOutStr, timeFormatter);
+                        }
 
                         AttendanceRecord record = new AttendanceRecord(employeeNumber, date, timeIn, timeOut);
                         records.add(record);
                     } catch (DateTimeParseException e) {
-                        System.err.println("Invalid date or time format in line: " + line);
+                        System.err.println("Invalid date or time format in attendance line: " + line + ", Error: " + e.getMessage());
                     } catch (NumberFormatException e) {
-                        System.err.println("Invalid number format in line: " + line);
+                        System.err.println("Invalid employee number format in attendance line: " + line + ", Error: " + e.getMessage());
                     } catch (Exception e) {
-                        System.err.println("Error parsing attendance line: " + line);
+                        System.err.println("Error parsing attendance line: " + line + ", Error: " + e.getMessage());
                         e.printStackTrace();
                     }
                 } else {
-                    System.err.println("Invalid attendance row: " + line);
+                    System.err.println("Invalid attendance row (expected 4 columns, found " + values.size() + "): " + line);
                 }
             }
         } catch (IOException e) {
@@ -151,10 +155,10 @@ public class CSVHandler {
             writer.newLine();
             for (AttendanceRecord record : records) {
                 writer.write(String.format("%d,%s,%s,%s",
-                    record.getEmployeeNumber(),
-                    record.getDate().format(attendanceDateFormatter),
-                    record.getTimeIn() != null ? record.getTimeIn().format(timeFormatter) : "",
-                    record.getTimeOut() != null ? record.getTimeOut().format(timeFormatter) : ""));
+                        record.getEmployeeNumber(),
+                        record.getDate().format(attendanceDateFormatter),
+                        record.getTimeIn() != null ? record.getTimeIn().format(timeFormatter) : "",
+                        record.getTimeOut() != null ? record.getTimeOut().format(timeFormatter) : ""));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -165,7 +169,6 @@ public class CSVHandler {
 
     public static void writeEmployeesToCSV(List<Employee> employees, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // Write header
             writer.write("Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN Number,Pag-ibig Number,Status,Position,Immediate Supervisor,Basic Salary,Rice Subsidy,Phone Allowance,Clothing Allowance,Semi-monthly Rate,Hourly Rate");
             writer.newLine();
 
@@ -177,15 +180,15 @@ public class CSVHandler {
                         emp.getLastName(),
                         emp.getFirstName(),
                         emp.getBirthday().format(employeeDateFormatter),
-                        "", // Address (not in Employee class, set as empty)
-                        "", // Phone Number (not in Employee class, set as empty)
+                        "", // Address
+                        "", // Phone Number
                         gov.getSssNumber(),
                         gov.getPhilHealthNumber(),
                         gov.getTinNumber(),
                         gov.getPagIbigNumber(),
                         emp.getStatus(),
                         emp.getPosition(),
-                        "", // Immediate Supervisor (not in Employee class, set as empty)
+                        "", // Immediate Supervisor
                         comp.getBasicSalary(),
                         comp.getRiceSubsidy(),
                         comp.getPhoneAllowance(),

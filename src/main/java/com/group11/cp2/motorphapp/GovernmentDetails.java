@@ -6,15 +6,15 @@ package com.group11.cp2.motorphapp;
  */
 public class GovernmentDetails {
     private String sssNumber;
-    private String tinNumber;
     private String philHealthNumber;
+    private String tinNumber;
     private String pagIbigNumber;
 
     // Constructor
-    public GovernmentDetails(String sssNumber, String tinNumber, String philHealthNumber, String pagIbigNumber) {
+    public GovernmentDetails(String sssNumber, String philHealthNumber, String tinNumber, String pagIbigNumber) {
         this.sssNumber = sssNumber;
-        this.tinNumber = tinNumber;
         this.philHealthNumber = philHealthNumber;
+        this.tinNumber = tinNumber;
         this.pagIbigNumber = pagIbigNumber;
     }
 
