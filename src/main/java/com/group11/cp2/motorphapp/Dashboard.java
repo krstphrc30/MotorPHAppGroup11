@@ -71,14 +71,14 @@ public class Dashboard extends javax.swing.JFrame {
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("View Employee");
         jPanel1.add(jButton7);
-        jButton7.setBounds(680, 950, 115, 30);
+        jButton7.setBounds(670, 950, 123, 30);
 
         jButton6.setBackground(new java.awt.Color(0, 102, 204));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Add Employee");
         jPanel1.add(jButton6);
-        jButton6.setBounds(810, 950, 109, 30);
+        jButton6.setBounds(810, 950, 119, 30);
 
         jButton8.setBackground(new java.awt.Color(0, 102, 204));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -90,7 +90,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton8);
-        jButton8.setBounds(940, 950, 72, 30);
+        jButton8.setBounds(940, 950, 74, 30);
 
         jButton26.setBackground(new java.awt.Color(0, 102, 204));
         jButton26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -347,20 +347,6 @@ public class Dashboard extends javax.swing.JFrame {
 private void initializeDashboard() {
         System.setProperty("sun.java2d.uiScale", "1.0"); // Fix DPI scaling
         User loggedInUser = User.getLoggedInUser();
-        if (loggedInUser == null) {
-            JOptionPane.showMessageDialog(null, "No user logged in.", "Error", JOptionPane.ERROR_MESSAGE);
-            new UserLogin(users).setVisible(true);
-            dispose();
-            return;
-        }
-        if (!loggedInUser.isAdmin()) {
-            JOptionPane.showMessageDialog(null, "Access restricted to Admin users.", "Access Denied", JOptionPane.ERROR_MESSAGE);
-            new UserLogin(users).setVisible(true);
-            dispose();
-            return;
-        }
-        System.out.println("Logged in: " + loggedInUser.getUsername());
-
         setTitle("MotorPH Payroll System");
         setLocationRelativeTo(null);
 
