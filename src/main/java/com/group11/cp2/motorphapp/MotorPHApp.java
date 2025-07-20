@@ -24,81 +24,98 @@ public class MotorPHApp {
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
-        try {
-            employees = CSVHandler.readEmployeesFromCSV("src/main/resources/employeedata.csv");
-            attendance = CSVHandler.readAttendanceCSV("src/main/resources/attendancerecord.csv");
-            System.out.println("Loaded " + employees.size() + " employees from CSV");
-            System.out.println("Loaded " + attendance.size() + " attendance records from CSV");
-        } catch (Exception e) {
-            System.err.println("Error loading CSV files: " + e.getMessage());
-        }
-
-        if (employees.isEmpty()) {
-            System.out.println("No employees loaded, adding test employee");
-            GovernmentDetails gov = new GovernmentDetails("123456789", "987654321", "111222333", "444555666");
-            CompensationDetails comp = new CompensationDetails(50000.0, 1000.0, 500.0, 300.0, 25000.0, 250.0);
-            employees.add(new Employee(10001, "Doe", "John", LocalDate.of(1990, 1, 1), "Staff", "Active", comp, gov));
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.csv"))) {
-            String line;
-            boolean isFirstLine = true;
-
-            while ((line = br.readLine()) != null) {
-                if (isFirstLine) {
-                    String[] header = parseCSVLine(line).toArray(new String[0]);
-                    if (header.length != 2) {
-                        throw new IOException("Invalid header in users.csv: expected exactly 2 columns (username,password)");
-                    }
-                    String[] expectedHeader = {"username", "password"};
-                    for (int i = 0; i < expectedHeader.length; i++) {
-                        if (!header[i].trim().equalsIgnoreCase(expectedHeader[i])) {
-                            throw new IOException("Invalid header in users.csv: expected " + expectedHeader[i] + ", found " + header[i]);
-                        }
-                    }
-                    isFirstLine = false;
-                    continue;
-                }
-
-                List<String> values = parseCSVLine(line);
-
-                if (values.size() == 2) {
-                    try {
-                        String username = values.get(0).trim();
-                        String password = values.get(1).trim();
-
-                        if (username.isEmpty()) {
-                            System.err.println("Empty username in line: " + line);
-                            continue;
-                        }
-                        if (password.isEmpty()) {
-                            System.err.println("Empty password in line: " + line);
-                            continue;
-                        }
-
-                        String email = username.equals("admin") ? "admin@motorph.com" : username + "@motorph.com";
-                        String role = username.equals("admin") ? "Admin" : "Employee";
-                        String status = "Active";
-
-                        users.add(new User(username, password, email, null, role, status));
-                    } catch (Exception e) {
-                        System.err.println("Error parsing user line: " + line + ", Error: " + e.getMessage());
-                    }
-                } else {
-                    System.err.println("Invalid user row (expected 2 columns, found " + values.size() + "): " + line);
+        // Set look and feel and initialize UI on the EDT
+        SwingUtilities.invokeLater(() -> {
+            // Set cross-platform look and feel
+            try {
+                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            } catch (Exception e) {
+                // Fallback to system look and feel if Nimbus fails
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ex) {
+                    System.err.println("Failed to set system look and feel: " + ex.getMessage());
+                    // Default Metal look and feel will be used if both fail
                 }
             }
-            System.out.println("Loaded " + users.size() + " users from CSV");
-        } catch (IOException e) {
-            System.err.println("Error reading users CSV: " + e.getMessage());
-            System.out.println("No users loaded, adding default admin user");
-            users.add(new User("admin", "admin123", "admin@motorph.com", null, "Admin", "Active"));
-            JOptionPane.showMessageDialog(null, 
-                "Failed to load user data: " + e.getMessage() + ". Using default admin user.", 
-                "CSV Error", JOptionPane.ERROR_MESSAGE);
-        }
 
-        java.awt.EventQueue.invokeLater(() -> {
+            // Load employee and attendance data
+            try {
+                employees = CSVHandler.readEmployeesFromCSV("src/main/resources/employeedata.csv");
+                attendance = CSVHandler.readAttendanceCSV("src/main/resources/attendancerecord.csv");
+                System.out.println("Loaded " + employees.size() + " employees from CSV");
+                System.out.println("Loaded " + attendance.size() + " attendance records from CSV");
+            } catch (Exception e) {
+                System.err.println("Error loading CSV files: " + e.getMessage());
+            }
+
+            if (employees.isEmpty()) {
+                System.out.println("No employees loaded, adding test employee");
+                GovernmentDetails gov = new GovernmentDetails("123456789", "987654321", "111222333", "444555666");
+                CompensationDetails comp = new CompensationDetails(50000.0, 1000.0, 500.0, 300.0, 25000.0, 250.0);
+                employees.add(new Employee(10001, "Doe", "John", LocalDate.of(1990, 1, 1), "Staff", "Active", comp, gov));
+            }
+
+            // Load user data
+            try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.csv"))) {
+                String line;
+                boolean isFirstLine = true;
+
+                while ((line = br.readLine()) != null) {
+                    if (isFirstLine) {
+                        String[] header = parseCSVLine(line).toArray(new String[0]);
+                        if (header.length != 2) {
+                            throw new IOException("Invalid header in users.csv: expected exactly 2 columns (username,password)");
+                        }
+                        String[] expectedHeader = {"username", "password"};
+                        for (int i = 0; i < expectedHeader.length; i++) {
+                            if (!header[i].trim().equalsIgnoreCase(expectedHeader[i])) {
+                                throw new IOException("Invalid header in users.csv: expected " + expectedHeader[i] + ", found " + header[i]);
+                            }
+                        }
+                        isFirstLine = false;
+                        continue;
+                    }
+
+                    List<String> values = parseCSVLine(line);
+
+                    if (values.size() == 2) {
+                        try {
+                            String username = values.get(0).trim();
+                            String password = values.get(1).trim();
+
+                            if (username.isEmpty()) {
+                                System.err.println("Empty username in line: " + line);
+                                continue;
+                            }
+                            if (password.isEmpty()) {
+                                System.err.println("Empty password in line: " + line);
+                                continue;
+                            }
+
+                            String email = username.equals("admin") ? "admin@motorph.com" : username + "@motorph.com";
+                            String role = username.equals("admin") ? "Admin" : "Employee";
+                            String status = "Active";
+
+                            users.add(new User(username, password, email, null, role, status));
+                        } catch (Exception e) {
+                            System.err.println("Error parsing user line: " + line + ", Error: " + e.getMessage());
+                        }
+                    } else {
+                        System.err.println("Invalid user row (expected 2 columns, found " + values.size() + "): " + line);
+                    }
+                }
+                System.out.println("Loaded " + users.size() + " users from CSV");
+            } catch (IOException e) {
+                System.err.println("Error reading users CSV: " + e.getMessage());
+                System.out.println("No users loaded, adding default admin user");
+                users.add(new User("admin", "admin123", "admin@motorph.com", null, "Admin", "Active"));
+                JOptionPane.showMessageDialog(null,
+                        "Failed to load user data: " + e.getMessage() + ". Using default admin user.",
+                        "CSV Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // Create and show the login UI
             new UserLogin(users).setVisible(true);
         });
     }

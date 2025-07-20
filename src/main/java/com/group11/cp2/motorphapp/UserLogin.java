@@ -81,7 +81,7 @@ public class UserLogin extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanel1.setLayout(null);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(249, 249, 249));
         jPanel3.setMinimumSize(new java.awt.Dimension(400, 500));
 
         jLabel1.setBackground(new java.awt.Color(14, 49, 113));
@@ -167,7 +167,7 @@ public class UserLogin extends javax.swing.JFrame {
         jPanel2.setMinimumSize(new java.awt.Dimension(400, 500));
 
         jLabel4.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Carlo\\Documents\\NetBeansProjects\\MotorPHAppGroup11\\MotorPHAppGroup11\\src\\main\\java\\com\\group11\\cp2\\Icon\\Motorph (2).png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("/Users/kaloy/NetBeansProjects/MotorPHAppGroup11/MotorPHAppGroup11/src/main/java/com/group11/cp2/Icon/Motorph (2).png")); // NOI18N
         jLabel4.setText("jLabel4");
 
         jLabel6.setFont(new java.awt.Font("Verdana Pro Cond Black", 1, 24)); // NOI18N
@@ -183,14 +183,14 @@ public class UserLogin extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
+                .addGap(132, 132, 132)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 124, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

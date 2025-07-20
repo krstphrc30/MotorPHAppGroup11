@@ -119,7 +119,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jScrollPane4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTable4.setBackground(new java.awt.Color(233, 233, 233));
+        jTable4.setBackground(new java.awt.Color(249, 249, 249));
         jTable4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,7 +182,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.add(jScrollPane4);
         jScrollPane4.setBounds(530, 10, 1260, 920);
 
-        jPanel12.setBackground(new java.awt.Color(233, 233, 233));
+        jPanel12.setBackground(new java.awt.Color(249, 249, 249));
         jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setPreferredSize(new java.awt.Dimension(500, 900));
 
