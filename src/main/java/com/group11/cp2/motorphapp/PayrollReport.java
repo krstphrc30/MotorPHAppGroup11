@@ -1,3 +1,8 @@
+/**
+ * Generates a payroll report for an employee in the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import java.time.Duration;
@@ -16,19 +21,24 @@ public class PayrollReport {
     private Deductions deductions;
     private double totalAllowances;
 
+    /**
+     * Creates a payroll report for the specified employee and month.
+     *
+     * @param employee Employee for the report.
+     * @param yearMonth Year and month for the report.
+     * @param attendanceRecords List of attendance records.
+     * @throws IllegalArgumentException If hourly rate or hours are invalid.
+     */
     public PayrollReport(Employee employee, YearMonth yearMonth, List<AttendanceRecord> attendanceRecords) {
         this.employee = employee;
         this.yearMonth = yearMonth;
 
-        // Filter attendance records for the specific employee and month
         List<AttendanceRecord> monthlyRecords = attendanceRecords.stream()
                 .filter(record -> record.getEmployeeNumber() == employee.getEmployeeNumber()
                         && YearMonth.from(record.getDate()).equals(yearMonth))
                 .collect(Collectors.toList());
 
-        // Handle empty records
         if (monthlyRecords.isEmpty()) {
-            System.err.println("Warning: No attendance records found for " + employee.getLastName() + ", " + employee.getFirstName() + " in " + yearMonth);
             this.monthlyRegularHours = 0.0;
             this.monthlyOvertimeHours = 0.0;
         } else {
@@ -42,41 +52,29 @@ public class PayrollReport {
                     .toMinutes() / 60.0;
         }
 
-        // Validate hourly rate
         double hourlyRate = employee.getCompensationDetails().getHourlyRate();
         if (hourlyRate <= 0) {
-            throw new IllegalArgumentException("Invalid hourly rate (" + hourlyRate + ") for employee #" + employee.getEmployeeNumber());
+            throw new IllegalArgumentException("Invalid hourly rate for employee #" + employee.getEmployeeNumber());
         }
 
-        // Validate hours
         if (monthlyRegularHours < 0 || monthlyOvertimeHours < 0) {
             throw new IllegalArgumentException("Negative hours detected for employee #" + employee.getEmployeeNumber());
         }
 
-        // Debug output to diagnose issues
-        System.out.println("Payroll Report for Employee #" + employee.getEmployeeNumber() + ", " + yearMonth);
-        System.out.println("Employee: " + employee.getLastName() + ", " + employee.getFirstName());
-        System.out.println("Filtered Records: " + monthlyRecords.size());
-        monthlyRecords.forEach(record -> System.out.println(record.toString()));
-        System.out.println("Monthly Regular Hours: " + monthlyRegularHours);
-        System.out.println("Monthly Overtime Hours: " + monthlyOvertimeHours);
-        System.out.println("Hourly Rate: " + hourlyRate);
-
-        // Calculate salaries
         this.baseSalary = hourlyRate * monthlyRegularHours;
         this.overtimePay = hourlyRate * 1.25 * monthlyOvertimeHours;
         this.grossSalary = baseSalary + overtimePay;
         this.totalAllowances = computeMonthlyAllowances(employee.getCompensationDetails());
         this.deductions = new Deductions(grossSalary, employee.getCompensationDetails().getBasicSalary());
-
-        // Log computed values
-        System.out.println("Base Salary: PHP " + String.format("%.2f", baseSalary));
-        System.out.println("Overtime Pay: PHP " + String.format("%.2f", overtimePay));
-        System.out.println("Gross Salary: PHP " + String.format("%.2f", grossSalary));
-        System.out.println("Total Allowances: PHP " + String.format("%.2f", totalAllowances));
-        System.out.println("Net Salary: PHP " + String.format("%.2f", getNetSalary()));
     }
 
+    /**
+     * Computes total monthly allowances.
+     *
+     * @param comp Employee's compensation details.
+     * @return Total allowances.
+     * @throws IllegalArgumentException If allowances are invalid.
+     */
     private double computeMonthlyAllowances(CompensationDetails comp) {
         double allowances = comp.getRiceSubsidy() + comp.getPhoneAllowance() + comp.getClothingAllowance();
         if (allowances < 0) {
@@ -85,6 +83,11 @@ public class PayrollReport {
         return allowances;
     }
 
+    /**
+     * Calculates net salary after deductions and adding allowances.
+     *
+     * @return Net salary.
+     */
     public double getNetSalary() {
         double netSalary = grossSalary - deductions.getTotalDeductions() + totalAllowances;
         if (netSalary < 0) {
@@ -103,12 +106,23 @@ public class PayrollReport {
     public Deductions getDeductions() { return deductions; }
     public double getTotalAllowances() { return totalAllowances; }
 
+    /**
+     * Formats duration as hours and minutes.
+     *
+     * @param duration Duration to format.
+     * @return Formatted string (e.g., "08h 30m").
+     */
     private String formatDuration(Duration duration) {
         long hours = duration.toHours();
         long minutes = duration.minusHours(hours).toMinutes();
         return String.format("%02dh %02dm", hours, minutes);
     }
 
+    /**
+     * Returns a string representation of the payroll report.
+     *
+     * @return Formatted payroll summary.
+     */
     @Override
     public String toString() {
         if (monthlyRegularHours == 0.0 && monthlyOvertimeHours == 0.0) {

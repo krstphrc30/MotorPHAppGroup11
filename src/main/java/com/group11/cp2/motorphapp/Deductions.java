@@ -1,4 +1,8 @@
-
+/**
+ * Calculates employee deductions for the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import java.util.ArrayList;
@@ -9,9 +13,15 @@ public class Deductions {
     private double pagIbig;
     private double withholdingTax;
 
+    /**
+     * Creates a Deductions instance based on salary details.
+     *
+     * @param monthlyGrossSalary Employee's monthly gross salary.
+     * @param basicSalary Employee's basic salary for PhilHealth calculation.
+     */
     public Deductions(double monthlyGrossSalary, double basicSalary) {
         this.sss = calculateSSSContribution(monthlyGrossSalary);
-        this.philHealth = calculatePhilHealthContribution(basicSalary); // Use basicSalary for PhilHealth
+        this.philHealth = calculatePhilHealthContribution(basicSalary);
         this.pagIbig = calculatePagIbigContribution(monthlyGrossSalary);
         double taxableIncome = monthlyGrossSalary - (sss + philHealth + pagIbig);
         this.withholdingTax = calculateWithholdingTax(taxableIncome);
@@ -22,10 +32,21 @@ public class Deductions {
     public double getPagIbig() { return pagIbig; }
     public double getWithholdingTax() { return withholdingTax; }
 
+    /**
+     * Calculates total deductions.
+     *
+     * @return Sum of SSS, PhilHealth, Pag-IBIG, and withholding tax.
+     */
     public double getTotalDeductions() {
         return sss + philHealth + pagIbig + withholdingTax;
     }
 
+    /**
+     * Calculates SSS contribution based on salary.
+     *
+     * @param monthlyGrossSalary Monthly gross salary.
+     * @return SSS contribution amount.
+     */
     private static double calculateSSSContribution(double monthlyGrossSalary) {
         class SalaryContribution {
             double salaryLimit;
@@ -89,23 +110,41 @@ public class Deductions {
             }
         }
 
-        return 1125.00; // Max contribution for salary >= 24,750
+        return 1125.00;
     }
 
+    /**
+     * Calculates PhilHealth contribution based on basic salary.
+     *
+     * @param basicSalary Employee's basic salary.
+     * @return PhilHealth contribution amount.
+     */
     private static double calculatePhilHealthContribution(double basicSalary) {
         double monthlyPremium = basicSalary * 0.03;
-        double employeeShare = monthlyPremium / 2; // Employee pays 50%
+        double employeeShare = monthlyPremium / 2;
 
-        if (basicSalary <= 10000.0) return 150.00; // Min: 300 / 2
-        else if (basicSalary >= 60000.0) return 900.00; // Max: 1,800 / 2
-        else return employeeShare; // 3% / 2
+        if (basicSalary <= 10000.0) return 150.00;
+        else if (basicSalary >= 60000.0) return 900.00;
+        else return employeeShare;
     }
 
+    /**
+     * Calculates Pag-IBIG contribution based on salary.
+     *
+     * @param monthlyGrossSalary Monthly gross salary.
+     * @return Pag-IBIG contribution amount.
+     */
     private static double calculatePagIbigContribution(double monthlyGrossSalary) {
         double contribution = monthlyGrossSalary <= 1500.0 ? monthlyGrossSalary * 0.01 : monthlyGrossSalary * 0.02;
-        return Math.min(contribution, 100.00); // Max: 100
+        return Math.min(contribution, 100.00);
     }
 
+    /**
+     * Calculates withholding tax based on taxable income.
+     *
+     * @param taxableIncome Taxable income after deductions.
+     * @return Withholding tax amount.
+     */
     private static double calculateWithholdingTax(double taxableIncome) {
         if (taxableIncome <= 20832.0) return 0.0;
         else if (taxableIncome < 33333.0) return (taxableIncome - 20833.0) * 0.20;

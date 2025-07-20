@@ -1,4 +1,8 @@
-
+/**
+ * Main application class for the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import javax.swing.*;
@@ -14,8 +18,12 @@ public class MotorPHApp {
     private static List<Employee> employees = new ArrayList<>();
     private static List<AttendanceRecord> attendance = new ArrayList<>();
 
+    /**
+     * Main entry point for the application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
-        // Load data from CSV files
         try {
             employees = CSVHandler.readEmployeesFromCSV("src/main/resources/employeedata.csv");
             attendance = CSVHandler.readAttendanceCSV("src/main/resources/attendancerecord.csv");
@@ -25,7 +33,6 @@ public class MotorPHApp {
             System.err.println("Error loading CSV files: " + e.getMessage());
         }
 
-        // Fallback: Add a hardcoded employee if CSV is empty
         if (employees.isEmpty()) {
             System.out.println("No employees loaded, adding test employee");
             GovernmentDetails gov = new GovernmentDetails("123456789", "987654321", "111222333", "444555666");
@@ -33,14 +40,12 @@ public class MotorPHApp {
             employees.add(new Employee(10001, "Doe", "John", LocalDate.of(1990, 1, 1), "Staff", "Active", comp, gov));
         }
 
-        // Load and validate users from users.csv
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/users.csv"))) {
             String line;
             boolean isFirstLine = true;
 
             while ((line = br.readLine()) != null) {
                 if (isFirstLine) {
-                    // Validate header
                     String[] header = parseCSVLine(line).toArray(new String[0]);
                     if (header.length != 2) {
                         throw new IOException("Invalid header in users.csv: expected exactly 2 columns (username,password)");
@@ -62,7 +67,6 @@ public class MotorPHApp {
                         String username = values.get(0).trim();
                         String password = values.get(1).trim();
 
-                        // Validate non-empty username and password
                         if (username.isEmpty()) {
                             System.err.println("Empty username in line: " + line);
                             continue;
@@ -72,12 +76,10 @@ public class MotorPHApp {
                             continue;
                         }
 
-                        // Set default values for email, role, and status
                         String email = username.equals("admin") ? "admin@motorph.com" : username + "@motorph.com";
                         String role = username.equals("admin") ? "Admin" : "Employee";
-                        String status = "Active"; // Default to Active for all users
+                        String status = "Active";
 
-                        // Create User object
                         users.add(new User(username, password, email, null, role, status));
                     } catch (Exception e) {
                         System.err.println("Error parsing user line: " + line + ", Error: " + e.getMessage());
@@ -89,7 +91,6 @@ public class MotorPHApp {
             System.out.println("Loaded " + users.size() + " users from CSV");
         } catch (IOException e) {
             System.err.println("Error reading users CSV: " + e.getMessage());
-            // Fallback: Add a hardcoded admin user
             System.out.println("No users loaded, adding default admin user");
             users.add(new User("admin", "admin123", "admin@motorph.com", null, "Admin", "Active"));
             JOptionPane.showMessageDialog(null, 
@@ -97,13 +98,17 @@ public class MotorPHApp {
                 "CSV Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Start with login frame
         java.awt.EventQueue.invokeLater(() -> {
             new UserLogin(users).setVisible(true);
         });
     }
 
-    // Reuse parseCSVLine from CSVHandler for consistency
+    /**
+     * Parses a CSV line into a list of values.
+     *
+     * @param line The CSV line to parse.
+     * @return List of parsed values.
+     */
     private static List<String> parseCSVLine(String line) {
         List<String> tokens = new ArrayList<>();
         boolean inQuotes = false;
@@ -123,14 +128,29 @@ public class MotorPHApp {
         return tokens;
     }
 
+    /**
+     * Gets the list of users.
+     *
+     * @return List of users.
+     */
     public static List<User> getUsers() {
         return users;
     }
 
+    /**
+     * Gets the list of employees.
+     *
+     * @return List of employees.
+     */
     public static List<Employee> getEmployees() {
         return employees;
     }
 
+    /**
+     * Gets the list of attendance records.
+     *
+     * @return List of attendance records.
+     */
     public static List<AttendanceRecord> getAttendance() {
         return attendance;
     }

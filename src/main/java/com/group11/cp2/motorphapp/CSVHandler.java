@@ -1,3 +1,8 @@
+/**
+ * Handles CSV file operations for the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import java.io.*;
@@ -14,6 +19,12 @@ public class CSVHandler {
     private static final DateTimeFormatter attendanceDateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
 
+    /**
+     * Reads employee data from a CSV file.
+     *
+     * @param filePath Path to the CSV file.
+     * @return List of Employee objects.
+     */
     public static List<Employee> readEmployeesFromCSV(String filePath) {
         List<Employee> employees = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -28,7 +39,7 @@ public class CSVHandler {
 
                 List<String> values = parseCSVLine(line);
 
-                if (values.size() >= 18) { // Ensure enough columns
+                if (values.size() >= 18) {
                     try {
                         int employeeNumber = Integer.parseInt(values.get(0).trim());
                         String lastName = values.get(1).trim();
@@ -43,17 +54,11 @@ public class CSVHandler {
                         double grossSemiMonthlyRate = parseDouble(values.get(17).trim());
                         double hourlyRate = parseDouble(values.get(18).trim());
 
-                        // Parse Government Details
-                        String sssNumber = values.get(6).trim();
-                        String philHealthNumber = values.get(7).trim();
-                        String tinNumber = values.get(8).trim();
-                        String pagIbigNumber = values.get(9).trim();
-
                         GovernmentDetails govDetails = new GovernmentDetails(
-                                sssNumber,
-                                philHealthNumber,
-                                tinNumber,
-                                pagIbigNumber
+                                values.get(6).trim(),
+                                values.get(7).trim(),
+                                values.get(8).trim(),
+                                values.get(9).trim()
                         );
 
                         CompensationDetails compensation = new CompensationDetails(
@@ -96,6 +101,12 @@ public class CSVHandler {
         return employees;
     }
 
+    /**
+     * Reads attendance records from a CSV file.
+     *
+     * @param filePath Path to the CSV file.
+     * @return List of AttendanceRecord objects.
+     */
     public static List<AttendanceRecord> readAttendanceCSV(String filePath) {
         List<AttendanceRecord> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -110,12 +121,11 @@ public class CSVHandler {
 
                 List<String> values = parseCSVLine(line);
 
-                if (values.size() >= 4) { // Expect exactly 4 columns: EmployeeNumber,Date,TimeIn,TimeOut
+                if (values.size() >= 4) {
                     try {
                         int employeeNumber = Integer.parseInt(values.get(0).trim());
                         LocalDate date = LocalDate.parse(values.get(1).trim(), attendanceDateFormatter);
 
-                        // Handle TimeIn and TimeOut, allowing for empty or null values
                         LocalTime timeIn = null;
                         String timeInStr = values.get(2).trim();
                         if (!timeInStr.isEmpty()) {
@@ -149,6 +159,12 @@ public class CSVHandler {
         return records;
     }
 
+    /**
+     * Writes attendance records to a CSV file.
+     *
+     * @param records List of attendance records.
+     * @param filePath Path to the CSV file.
+     */
     public static void writeAttendanceToCSV(List<AttendanceRecord> records, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("EmployeeNumber,Date,TimeIn,TimeOut");
@@ -167,6 +183,12 @@ public class CSVHandler {
         }
     }
 
+    /**
+     * Writes employee data to a CSV file.
+     *
+     * @param employees List of employees.
+     * @param filePath Path to the CSV file.
+     */
     public static void writeEmployeesToCSV(List<Employee> employees, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN Number,Pag-ibig Number,Status,Position,Immediate Supervisor,Basic Salary,Rice Subsidy,Phone Allowance,Clothing Allowance,Semi-monthly Rate,Hourly Rate");
@@ -180,15 +202,15 @@ public class CSVHandler {
                         emp.getLastName(),
                         emp.getFirstName(),
                         emp.getBirthday().format(employeeDateFormatter),
-                        "", // Address
-                        "", // Phone Number
+                        "",
+                        "",
                         gov.getSssNumber(),
                         gov.getPhilHealthNumber(),
                         gov.getTinNumber(),
                         gov.getPagIbigNumber(),
                         emp.getStatus(),
                         emp.getPosition(),
-                        "", // Immediate Supervisor
+                        "",
                         comp.getBasicSalary(),
                         comp.getRiceSubsidy(),
                         comp.getPhoneAllowance(),
@@ -203,6 +225,12 @@ public class CSVHandler {
         }
     }
 
+    /**
+     * Parses a CSV line into a list of values.
+     *
+     * @param line The CSV line to parse.
+     * @return List of parsed values.
+     */
     private static List<String> parseCSVLine(String line) {
         List<String> tokens = new ArrayList<>();
         boolean inQuotes = false;
@@ -222,6 +250,13 @@ public class CSVHandler {
         return tokens;
     }
 
+    /**
+     * Parses a string to a double, removing commas.
+     *
+     * @param input String to parse.
+     * @return Parsed double value.
+     * @throws NumberFormatException If parsing fails.
+     */
     private static double parseDouble(String input) throws NumberFormatException {
         return Double.parseDouble(input.replace(",", ""));
     }

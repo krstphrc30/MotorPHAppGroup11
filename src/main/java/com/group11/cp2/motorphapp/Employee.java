@@ -1,4 +1,8 @@
-
+/**
+ * Represents an employee in the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import java.time.LocalDate;
@@ -13,6 +17,18 @@ public class Employee {
     private CompensationDetails compensationDetails;
     private GovernmentDetails governmentDetails;
 
+    /**
+     * Creates an Employee with the specified details.
+     *
+     * @param employeeNumber Unique employee ID.
+     * @param lastName Employee's last name.
+     * @param firstName Employee's first name.
+     * @param birthday Employee's date of birth.
+     * @param position Employee's job position.
+     * @param status Employment status (e.g., Active, Inactive).
+     * @param compensationDetails Employee's compensation details.
+     * @param governmentDetails Employee's government-related details.
+     */
     public Employee(int employeeNumber, String lastName, String firstName, LocalDate birthday,
                     String position, String status, CompensationDetails compensationDetails,
                     GovernmentDetails governmentDetails) {

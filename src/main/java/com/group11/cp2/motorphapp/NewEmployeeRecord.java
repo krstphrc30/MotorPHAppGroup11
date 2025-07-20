@@ -1,3 +1,8 @@
+/**
+ * Window for adding new employee records in the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import javax.swing.*;
@@ -5,41 +10,38 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.time.LocalDate;
 
-/**
- * @author Carlo
- */
 public class NewEmployeeRecord extends javax.swing.JFrame {
     private List<Employee> employees;
     private DefaultTableModel tableModel;
 
     /**
-     * Creates new form NewEmployeeRecord
+     * Creates new form NewEmployeeRecord with default constructor.
      */
     public NewEmployeeRecord() {
-        this(null, null); // Fallback for JForm compatibility
+        this(null, null);
     }
 
     /**
-     * Constructor with parameters for integration with MotorPHApp
-     * @param employees List of employees to update
-     * @param tableModel Dashboard table model to update
+     * Creates new form with employee list and table model.
+     *
+     * @param employees List of employees to update.
+     * @param tableModel Dashboard table model to update.
      */
     public NewEmployeeRecord(List<Employee> employees, DefaultTableModel tableModel) {
         this.employees = employees;
         this.tableModel = tableModel;
         initComponents();
         initializeEmployeeNumber();
-        System.out.println("NewEmployeeRecord constructor called, employees size: " + (employees != null ? employees.size() : "null") +
+        System.out.println("NewEmployeeRecord initialized, employees size: " + (employees != null ? employees.size() : "null") +
                 ", tableModel: " + (tableModel != null ? "present" : "null"));
     }
 
     /**
-     * Initialize the employee number field with an auto-generated number
+     * Initializes the employee number field with an auto-generated number.
      */
     private void initializeEmployeeNumber() {
-        jTextField2.setEditable(false); // Make employee number non-editable
+        jTextField2.setEditable(false);
         if (employees != null) {
-            // Read employees from CSV to ensure latest data
             List<Employee> latestEmployees = CSVHandler.readEmployeesFromCSV("src/main/resources/employeedata.csv");
             if (latestEmployees != null) {
                 employees.clear();
@@ -48,8 +50,7 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
                 System.err.println("Warning: CSVHandler.readEmployeesFromCSV returned null");
             }
 
-            // Generate next employee number
-            int nextEmpNumber = 10001; // Starting number if list is empty
+            int nextEmpNumber = 10001;
             if (!employees.isEmpty()) {
                 nextEmpNumber = employees.stream()
                         .mapToInt(Employee::getEmployeeNumber)
@@ -330,7 +331,9 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Handles Cancel button click to close the window.
+     */
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
        System.out.println("NewEmployeeRecord: Cancel button clicked at " + java.time.LocalDateTime.now());
         dispose();

@@ -1,5 +1,9 @@
 package com.group11.cp2.motorphapp;
-
+/**
+ * Displays employee details and payroll computation in the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.time.YearMonth;

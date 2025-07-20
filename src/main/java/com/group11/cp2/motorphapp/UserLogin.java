@@ -1,3 +1,8 @@
+/**
+ * Login window for the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import javax.swing.*;
@@ -6,15 +11,18 @@ import java.util.List;
 public class UserLogin extends javax.swing.JFrame {
     private final List<User> users;
 
+    /**
+     * Creates a login window with the given user list.
+     *
+     * @param users List of registered users.
+     */
     public UserLogin(List<User> users) {
         this.users = users;
         initComponents();
         setTitle("MotorPH Payroll System - Login");
-        setLocationRelativeTo(null); // Center the window
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-        // Attach login logic to jButton1
         jButton1.addActionListener(e -> {
             String username = jTextField1.getText().trim();
             String password = new String(jPasswordField1.getPassword()).trim();

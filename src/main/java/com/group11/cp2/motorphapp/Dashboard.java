@@ -1,3 +1,8 @@
+/**
+ * Dashboard form for managing employee records in the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import javax.swing.*;
@@ -5,9 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-/**
- * Dashboard form for MotorPH Payroll System to manage employee records.
- */
 public class Dashboard extends javax.swing.JFrame {
 
     private List<User> users;
@@ -15,7 +17,11 @@ public class Dashboard extends javax.swing.JFrame {
     private List<AttendanceRecord> attendance;
 
     /**
-     * Creates new form Dashboard with required data.
+     * Creates a new Dashboard with required data.
+     *
+     * @param users List of users.
+     * @param employees List of employees.
+     * @param attendance List of attendance records.
      */
     public Dashboard(List<User> users, List<Employee> employees, List<AttendanceRecord> attendance) {
         this.users = users;

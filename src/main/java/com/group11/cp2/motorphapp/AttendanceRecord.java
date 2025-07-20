@@ -1,3 +1,8 @@
+/**
+ * Represents an employee's attendance record in the MotorPH Payroll System.
+ *
+ * @author Kristopher Carlo, Clarinda, Pil, Janice (Group 11)
+ */
 package com.group11.cp2.motorphapp;
 
 import java.time.*;
@@ -21,6 +26,14 @@ public class AttendanceRecord {
     private static final LocalTime WORK_END = LocalTime.of(17, 0);
     private static final Duration BREAK_TIME = Duration.ofHours(1);
 
+    /**
+     * Creates an attendance record with the specified details.
+     *
+     * @param employeeNumber Employee's unique ID.
+     * @param date Date of the attendance record.
+     * @param timeIn Time the employee clocked in.
+     * @param timeOut Time the employee clocked out.
+     */
     public AttendanceRecord(int employeeNumber, LocalDate date, LocalTime timeIn, LocalTime timeOut) {
         this.employeeNumber = employeeNumber;
         this.date = date;
@@ -29,6 +42,9 @@ public class AttendanceRecord {
         computeWorkDurations();
     }
 
+    /**
+     * Computes regular and overtime durations based on time in and out.
+     */
     private void computeWorkDurations() {
         if (timeIn == null || timeOut == null) {
             System.err.println("Warning: Null timeIn or timeOut for employee #" + employeeNumber + " on " + date);
@@ -60,20 +76,49 @@ public class AttendanceRecord {
     public LocalTime getTimeOut() { return timeOut; }
     public Duration getRegularDuration() { return regularDuration; }
     public Duration getOvertimeDuration() { return overtimeDuration; }
+
+    /**
+     * Calculates total worked duration (regular + overtime).
+     *
+     * @return Total worked duration.
+     */
     public Duration getTotalWorkedDuration() { return regularDuration.plus(overtimeDuration); }
 
+    /**
+     * Formats a duration as hours and minutes.
+     *
+     * @param duration Duration to format.
+     * @return Formatted string (e.g., "08h 30m").
+     */
     private static String formatDuration(Duration duration) {
         long hours = duration.toHours();
         long minutes = duration.minusHours(hours).toMinutes();
         return String.format("%02dh %02dm", hours, minutes);
     }
 
+    /**
+     * Gets the YearMonth from a date.
+     *
+     * @param date Date to extract YearMonth from.
+     * @return YearMonth instance.
+     */
     private static YearMonth getYearMonth(LocalDate date) { return YearMonth.from(date); }
 
+    /**
+     * Prints monthly attendance summary for all employees.
+     *
+     * @param records List of attendance records.
+     */
     public static void printMonthlySummary(List<AttendanceRecord> records) {
         System.out.println(getMonthlySummary(records));
     }
 
+    /**
+     * Generates monthly attendance summary for all employees.
+     *
+     * @param records List of attendance records.
+     * @return Formatted summary string.
+     */
     public static String getMonthlySummary(List<AttendanceRecord> records) {
         StringBuilder sb = new StringBuilder();
         Map<Integer, List<AttendanceRecord>> recordsByEmployee = records.stream()
@@ -97,6 +142,13 @@ public class AttendanceRecord {
         return sb.toString();
     }
 
+    /**
+     * Generates monthly hours summary for employees.
+     *
+     * @param records List of attendance records.
+     * @param employees List of employees.
+     * @return Formatted hours summary string.
+     */
     public static String generateMonthlySalarySummary(List<AttendanceRecord> records, List<Employee> employees) {
         Map<Integer, Employee> employeeMap = employees.stream()
                 .collect(Collectors.toMap(Employee::getEmployeeNumber, e -> e));
@@ -129,6 +181,13 @@ public class AttendanceRecord {
         return sb.toString();
     }
 
+    /**
+     * Generates monthly pay summary for employees.
+     *
+     * @param records List of attendance records.
+     * @param employees List of employees.
+     * @return Formatted pay summary string.
+     */
     public static String generatePaySummary(List<AttendanceRecord> records, List<Employee> employees) {
         Map<Integer, Employee> employeeMap = employees.stream().collect(Collectors.toMap(Employee::getEmployeeNumber, e -> e));
         Map<Integer, List<AttendanceRecord>> recordsByEmployee = records.stream().collect(Collectors.groupingBy(AttendanceRecord::getEmployeeNumber));
@@ -166,6 +225,11 @@ public class AttendanceRecord {
         return sb.toString();
     }
 
+    /**
+     * Returns a string representation of the attendance record.
+     *
+     * @return Formatted string with attendance details.
+     */
     @Override
     public String toString() {
         return "Employee #" + employeeNumber +
