@@ -97,6 +97,7 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(14, 39, 94));
 
+        jPanel2.setBackground(new java.awt.Color(249, 249, 249));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jButton13.setBackground(new java.awt.Color(0, 102, 204));
@@ -158,6 +159,7 @@ public class NewEmployeeRecord extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(249, 249, 249));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(14, 39, 94), 3));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
